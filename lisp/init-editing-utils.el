@@ -18,7 +18,7 @@
  ediff-split-window-function 'split-window-horizontally
  ediff-window-setup-function 'ediff-setup-windows-plain
  indent-tabs-mode nil
- make-backup-files nil
+ ;; make-backup-files nil
  mouse-yank-at-point t
  save-interprogram-paste-before-kill t
  scroll-preserve-screen-position 'always
@@ -153,6 +153,7 @@
 
 (require-package 'ace-jump-mode)
 (global-set-key (kbd "C-;") 'ace-jump-mode)
+(global-set-key (kbd "C-\'") 'ace-jump-mode)
 (global-set-key (kbd "C-:") 'ace-jump-word-mode)
 
 
@@ -295,10 +296,10 @@ on the new line if the line would have been blank.
 With arg N, insert N newlines."
   (interactive "*p")
   (let* ((do-fill-prefix (and fill-prefix (bolp)))
-	 (do-left-margin (and (bolp) (> (current-left-margin) 0)))
-	 (loc (point-marker))
-	 ;; Don't expand an abbrev before point.
-	 (abbrev-mode nil))
+         (do-left-margin (and (bolp) (> (current-left-margin) 0)))
+         (loc (point-marker))
+         ;; Don't expand an abbrev before point.
+         (abbrev-mode nil))
     (delete-horizontal-space t)
     (newline n)
     (indent-according-to-mode)
@@ -307,8 +308,8 @@ With arg N, insert N newlines."
     (goto-char loc)
     (while (> n 0)
       (cond ((bolp)
-	     (if do-left-margin (indent-to (current-left-margin)))
-	     (if do-fill-prefix (insert-and-inherit fill-prefix))))
+             (if do-left-margin (indent-to (current-left-margin)))
+             (if do-fill-prefix (insert-and-inherit fill-prefix))))
       (forward-line 1)
       (setq n (1- n)))
     (goto-char loc)
@@ -345,5 +346,193 @@ With arg N, insert N newlines."
 (guide-key-mode 1)
 (diminish 'guide-key-mode)
 
+
+
+;; Backup
+(if (not (file-exists-p (expand-file-name "~/.backups")))
+    (make-directory (expand-file-name "~/.backups")))
+(setq make-backup-file t)
+(setq
+ backup-by-coping t                     ; don't clobber symlinks
+ backup-directory-alist '(("." . "~/.backups"))
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t                      ;use versioned backups
+ )
+
+;; Make backups of files, even when they're in version control
+(setq vc-make-backup-files nil)
+
+
+
+;; { smarter navigation to the beginning of a line
+;; http://emacsredux.com/blog/2013/05/22/smarter-navigation-to-the-beginning-of-a-line/
+(defun smarter-move-beginning-of-line (arg)
+  "Move point back to indentation of beginning of line.
+
+Move point to the first non-whitespace character on this line.
+If point is already there, move to the beginning of the line.
+Effectively toggle between the first non-whitespace character and
+the beginning of the line.
+
+If ARG is not nil or 1, move forward ARG - 1 lines first.  If
+point reaches the beginning or end of the buffer, stop there."
+  (interactive "^p")
+  (setq arg (or arg 1))
+
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
+
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
+
+;; remap C-a to `smarter-move-beginning-of-line'
+(global-set-key [remap move-beginning-of-line]
+                'smarter-move-beginning-of-line)
+;; }
+
+(dolist (mode '(c-mode c++-mode objc-mode java-mode jde-mode
+                       perl-mode cperl-mode php-mode python-mode ruby-mode
+                       lisp-mode emacs-lisp-mode xml-mode nxml-mode html-mode
+                       lisp-interaction-mode sh-mode sgml-mode))
+  (font-lock-add-keywords
+   mode
+   '(("\\<\\(FIXME\\|TODO\\|Todo\\)\\>" 1 font-lock-warning-face prepend)
+     ("\\<\\(FIXME\\|TODO\\|Todo\\):" 1 font-lock-warning-face prepend))))
+
+;; advanced comment function
+(defun my-comment-dwim-line (&optional arg)
+  "Replacement for the comment-dwim command. If no region is selected and current line is not blank and we are not at the end of the line, then comment current line. Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+  (interactive "*P")
+  (comment-normalize-vars)
+  (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position))
+    (comment-dwim arg)))
+(global-set-key (kbd "C-M-;") 'my-comment-dwim-line)
+
+(defun format-region ()
+  "Format region, if no region actived, format current buffer.
+Like eclipse's Ctrl+Alt+F."
+  (interactive)
+  (let ((start (point-min))
+        (end (point-max)))
+    (if (and (fboundp 'region-active-p) (region-active-p))
+        (progn (setq start (region-beginning))
+               (setq end (region-end)))
+      (progn (when (fboundp 'whitespace-cleanup)
+               (whitespace-cleanup))
+             (setq end (point-max))))
+    (save-excursion
+      (save-restriction
+        (narrow-to-region (point-min) end)
+        (push-mark (point))
+        (push-mark (point-max) nil t)
+        (goto-char start)
+        (when (fboundp 'whitespace-cleanup)
+          (whitespace-cleanup))
+        (untabify start (point-max))
+        (indent-region start (point-max) nil)))))
+
+(defun cxx-file-p (file)
+  (let ((file-extension (file-name-extension file)))
+    (and file-extension
+         (string= file (file-name-sans-versions file))
+         (find file-extension
+               '("h" "hpp" "hxx" "c" "cpp" "cxx" "cc")
+               :test 'string=))))
+
+(defun format-cxx-file (file)
+  "Format a c/c++ file."
+  (interactive "F")
+  (if (cxx-file-p file)
+      (let ((get-fb (get-file-buffer file))
+            (buffer (find-file-noselect file))) ;; open buffer
+        (save-excursion
+          (set-buffer buffer)
+          ;; (mark-whole-buffer)
+          (when (fboundp 'whitespace-cleanup)
+            (whitespace-cleanup))
+          ;; (c-set-style "stroustrup")
+          (untabify (point-min) (point-max))
+          (indent-region (point-min) (point-max))
+          (save-buffer)
+          (if (not get-fb)
+              (kill-buffer))
+          ;; (kill-buffer)
+          ;; (message "Formated c++ file:%s" file)
+          ))
+    ;; (message "%s isn't a c++ file" file)
+    ))
+
+(defun format-cxx-dired (dirname)
+  "Format all c/c++ file in a directory."
+  (interactive "D")
+  ;; (message "directory:%s" dirname)
+  (let ((files (directory-files dirname t)))
+    (dolist (x files)
+      (if (not (string= "." (substring (file-name-nondirectory x) 0 1)))
+          (if (file-directory-p x)
+              (format-cxx-dired x)
+            (if (and (file-regular-p x)
+                     (not (file-symlink-p x))
+                     (cxx-file-p x))
+                (format-cxx-file x)))))))
+(global-set-key (kbd "ESC <f8>") 'format-region) ; putty
+(global-set-key (kbd "C-S-f") 'format-region)
+
+
+;; http://emacsredux.com/blog/2013/04/21/edit-files-as-root/
+(defun sudo-edit (&optional arg)
+  "Edit currently visited file as root.
+
+With a prefix ARG prompt for a file to visit.
+Will also prompt for a file to visit if current
+buffer is not visiting a file."
+  (interactive "P")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:"
+                         (ido-read-file-name "Find file(as root): ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+
+
+;; hide / show
+(defvar hs--overlay-keymap nil "keymap for folding overlay")
+(let ((map (make-sparse-keymap)))
+  (define-key map [mouse-1] 'hs-show-block)
+  (setq hs--overlay-keymap map))
+(setq hs-set-up-overlay
+      (defun my-display-code-line-counts (ov)
+        (when (eq 'code (overlay-get ov 'hs))
+          (overlay-put ov 'display
+                       (propertize
+                        (format "...<%d>"
+                                (count-lines (overlay-start ov)
+                                             (overlay-end ov)))
+                        'face 'mode-line))
+          (overlay-put ov 'priority (overlay-end ov))
+          (overlay-put ov 'keymap hs--overlay-keymap)
+          (overlay-put ov 'pointer 'hand))))
+(eval-after-load "hideshow"
+  '(progn (define-key hs-minor-mode-map [(shift mouse-2)] nil)
+          (define-key hs-minor-mode-map (kbd "C-+") 'hs-toggle-hiding)
+          (define-key hs-minor-mode-map (kbd "C-:") 'hs-hide-all)
+          (define-key hs-minor-mode-map (kbd "C-\"") 'hs-show-all)
+          ;; (define-key hs-minor-mode-map (kbd "C-:") 'hs-hide-block)
+          ;; (define-key hs-minor-mode-map (kbd "C-\"") 'hs-show-block)
+          ;; (define-key hs-minor-mode-map [/C-c l] 'hs-hide-level)
+          ;; (define-key hs-minor-mode-map [/C-c t] 'hs-toggle-hiding)
+          (define-key hs-minor-mode-map (kbd "<left-fringe> <mouse-2>")
+            'hs-mouse-toggle-hiding)))
+(dolist (hook '(prog-mode-hook
+                html-mode-hook
+                css-mode-hook))
+  (add-hook hook '(lambda ()
+                    (hs-minor-mode))))
 
 (provide 'init-editing-utils)

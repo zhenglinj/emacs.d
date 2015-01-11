@@ -19,5 +19,9 @@
   (add-hook 'compilation-finish-functions
             'sanityinc/alert-after-compilation-finish))
 
+
+(require-package 'smart-compile)
+(require 'smart-compile)
+(global-set-key [C-f7] 'smart-compile)
 
 (provide 'init-compile)

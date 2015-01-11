@@ -13,6 +13,9 @@
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
 (defconst *is-a-mac* (eq system-type 'darwin))
+(defconst *xemacs* (featurep 'xemacs) )
+(defconst *emacs23* (and (not *xemacs*) (or (>= emacs-major-version 23))) )
+(defconst *emacs24* (and (not *xemacs*) (or (>= emacs-major-version 24))) )
 
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
@@ -38,6 +41,14 @@
 (require-package 'scratch)
 (require-package 'mwe-log-commands)
 
+(require 'init-sdcv)
+(require 'init-popup)
+(require 'init-move-window-buffer)
+;; require init-yasnippet before init-auto-complete
+(if (not (boundp 'light-weight-emacs))
+    (require 'init-yasnippet))
+(require 'init-gtags)
+
 (require 'init-frame-hooks)
 (require 'init-xterm)
 (require 'init-themes)
@@ -56,7 +67,8 @@
 (require 'init-hippie-expand)
 (require 'init-auto-complete)
 (require 'init-windows)
-(require 'init-sessions)
+(if (not (boundp 'light-weight-emacs))
+    (require 'init-sessions))
 (require 'init-fonts)
 (require 'init-mmm)
 
@@ -85,6 +97,7 @@
 (require 'init-ruby-mode)
 (require 'init-rails)
 (require 'init-sql)
+(require 'init-cc-mode)
 
 (require 'init-paredit)
 (require 'init-lisp)
@@ -99,7 +112,9 @@
 
 (require 'init-misc)
 
-(require 'init-dash)
+(if *is-a-mac*
+    (require 'init-dash)
+  (require 'init-zeal))
 (require 'init-ledger)
 ;; Extra packages which don't require any configuration
 

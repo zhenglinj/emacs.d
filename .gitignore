@@ -33,3 +33,8 @@ site-lisp/package/
 /.smex-items
 /image-dired/
 /eshell
+/cfs-profiles.d/
+/ede-projects.el
+/lisp/init-local.el
+/yasnippet-snippets/
+/site-lisp/*
