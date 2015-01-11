@@ -33,6 +33,8 @@ site-lisp/package/
 /.smex-items
 /image-dired/
 /eshell
+/.cask/
+/.sx/
 /cfs-profiles.d/
 /ede-projects.el
 /lisp/init-local.el
