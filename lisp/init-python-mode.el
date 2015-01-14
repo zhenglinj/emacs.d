@@ -72,6 +72,7 @@
 ;;   (python-environment-run "pip" "install" "epc"))
 (require-package 'epc)
 
+(require-package 'jedi)
 (autoload 'jedi:setup "jedi" nil t)
 (setq jedi:setup-keys t)
 (setq jedi:use-shortcuts t)
