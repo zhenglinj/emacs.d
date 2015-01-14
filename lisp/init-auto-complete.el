@@ -65,7 +65,7 @@
 
 (setq ac-auto-start nil)
 (setq ac-quick-help-delay 0.5)
-;; (ac-set-trigger-key "TAB")
+(ac-set-trigger-key "TAB")
 
 (defun my-ac-config ()
   (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
