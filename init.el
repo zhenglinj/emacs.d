@@ -48,6 +48,7 @@
 (if (not (boundp 'light-weight-emacs))
     (require 'init-yasnippet))
 (require 'init-gtags)
+(require 'init-bm)
 
 (require 'init-frame-hooks)
 (require 'init-xterm)
