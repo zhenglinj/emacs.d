@@ -1,43 +1,37 @@
-;; added C++98 keywords, and xnew C++11 keywords
-(require 'font-lock)
+;; Auto-complet SECTION
+(require-package 'auto-complete-clang)
+(require 'auto-complete-clang)
 
-(defun --copy-face (new-face face)
-  "Define NEW-FACE from existing FACE."
-  (copy-face face new-face)
-  (eval `(defvar ,new-face nil))
-  (set new-face new-face))
+(defun my-ac-cc-mode-setup ()
+  (setq ac-clang-flags
+        (mapcar(lambda (item)(concat "-I" item))
+               (split-string
+                "
+ /usr/include/c++/4.8
+ /usr/include/i386-linux-gnu/c++/4.8
+ /usr/include/c++/4.8/backward
+ /usr/lib/gcc/i686-linux-gnu/4.8/include
+ /usr/local/include
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed
+ /usr/include/i386-linux-gnu
+ /usr/include
+"
+                )))
+  (setq ac-sources (append '(ac-source-clang
+                             ac-source-gtags
+                             ac-source-yasnippet
+                             )
+                           ac-sources)))
+(add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
 
-(--copy-face 'font-lock-label-face  ; labels, case, public, private, proteced, namespace-tags
-         'font-lock-keyword-face)
-(--copy-face 'font-lock-doc-markup-face ; comment markups such as Javadoc-tags
-         'font-lock-doc-face)
-(--copy-face 'font-lock-doc-string-face ; comment markups
-         'font-lock-comment-face)
+
+;; C/C++ SECTION
+(add-to-list 'auto-mode-alist '("\\.[cC]\\'" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.[hH]\\'" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.[cC][pP][pP]\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.[hH][pP][pP]\\'" . c++-mode))
 
-(global-font-lock-mode t)
-(setq font-lock-maximum-decoration t)
-
-
-(add-hook 'c++-mode-hook
-      '(lambda()
-        (font-lock-add-keywords
-         nil '(;; complete some fundamental keywords
-           ("\\<\\(void\\|unsigned\\|signed\\|char\\|short\\|bool\\|int\\|long\\|float\\|double\\)\\>" . font-lock-keyword-face)
-           ;; add the new C++11 keywords
-           ("\\<\\(alignof\\|alignas\\|constexpr\\|decltype\\|noexcept\\|nullptr\\|static_assert\\|thread_local\\|override\\|final\\)\\>" . font-lock-keyword-face)
-           ("\\<\\(char[0-9]+_t\\)\\>" . font-lock-keyword-face)
-           ;; PREPROCESSOR_CONSTANT
-           ("\\<[A-Z]+[A-Z_]+\\>" . font-lock-constant-face)
-           ;; hexadecimal numbers
-           ("\\<0[xX][0-9A-Fa-f]+\\>" . font-lock-constant-face)
-           ;; integer/float/scientific numbers
-           ("\\<[\\-+]*[0-9]*\\.?[0-9]+\\([ulUL]+\\|[eE][\\-+]?[0-9]+\\)?\\>" . font-lock-constant-face)
-           ;; user-types (customize!)
-           ("\\<[A-Za-z_]+[A-Za-z_0-9]*_\\(t\\|type\\|ptr\\)\\>" . font-lock-type-face)
-           ("\\<\\(xstring\\|xchar\\)\\>" . font-lock-type-face)
-           ))
-        ) t)
-
+
 (require 'cc-mode)
 (defun c-wx-lineup-topmost-intro-cont (langelem)
   (save-excursion
@@ -214,34 +208,52 @@ the directories in the INCLUDE environment variable."
      (define-key gud-minor-mode-map [S-f11] 'gud-finish)
      (define-key gud-minor-mode-map (kbd "ESC <f11>") 'gud-finish)))
 
+
+;; Added C++98 keywords, and C++11 keywords
+;; http://stackoverflow.com/questions/8549351/c11-mode-or-settings-for-emacs
+(require 'font-lock)
 
-;;===== hack gud-mode begin
-;; move the cursor to the end of last line if it's gud-mode
-(defun hack-gud-mode ()
-  (when (string= major-mode "gud-mode")
-    (goto-char (point-max))))
+(defun --copy-face (new-face face)
+  "Define NEW-FACE from existing FACE."
+  (copy-face face new-face)
+  (eval `(defvar ,new-face nil))
+  (set new-face new-face))
 
-(defadvice switch-to-buffer (after switch-to-buffer-after activate)
-  (hack-gud-mode))
+(--copy-face 'font-lock-label-face  ; labels, case, public, private, proteced, namespace-tags
+             'font-lock-keyword-face)
+(--copy-face 'font-lock-doc-markup-face ; comment markups such as Javadoc-tags
+             'font-lock-doc-face)
+(--copy-face 'font-lock-doc-string-face ; comment markups
+             'font-lock-comment-face)
 
-;; from switch-window is from 3rd party plugin switch windows.el
-(defadvice switch-window (after switch-window-after activate)
-  (hack-gud-mode))
+(global-font-lock-mode t)
+(setq font-lock-maximum-decoration t)
 
-;; windmove-do-window-select is from windmove.el
-(defadvice windmove-do-window-select (after windmove-do-window-select-after activate)
-  (hack-gud-mode))
-;; ==== end
+(add-hook 'c++-mode-hook
+          '(lambda()
+             (font-lock-add-keywords
+              nil '(;; complete some fundamental keywords
+                    ("\\<\\(void\\|unsigned\\|signed\\|char\\|short\\|bool\\|int\\|long\\|float\\|double\\)\\>" . font-lock-keyword-face)
+                    ;; add the new C++11 keywords
+                    ("\\<\\(alignof\\|alignas\\|constexpr\\|decltype\\|noexcept\\|nullptr\\|static_assert\\|thread_local\\|override\\|final\\)\\>" . font-lock-keyword-face)
+                    ("\\<\\(char[0-9]+_t\\)\\>" . font-lock-keyword-face)
+                    ;; PREPROCESSOR_CONSTANT
+                    ("\\<[A-Z]+[A-Z_]+\\>" . font-lock-constant-face)
+                    ;; hexadecimal numbers
+                    ("\\<0[xX][0-9A-Fa-f]+\\>" . font-lock-constant-face)
+                    ;; integer/float/scientific numbers
+                    ("\\<[\\-+]*[0-9]*\\.?[0-9]+\\([ulUL]+\\|[eE][\\-+]?[0-9]+\\)?\\>" . font-lock-constant-face)
+                    ;; user-types (customize!)
+                    ("\\<[A-Za-z_]+[A-Za-z_0-9]*_\\(t\\|type\\|ptr\\)\\>" . font-lock-type-face)
+                    ("\\<\\(xstring\\|xchar\\)\\>" . font-lock-type-face)
+                    ))
+             ) t)
 
-;C/C++ SECTION
 (defun my-c-mode-hook ()
   ;; @see http://stackoverflow.com/questions/3509919/ \
   ;; emacs-c-opening-corresponding-header-file
   (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
-  (local-set-key "\M-f" 'c-forward-into-nomenclature)
-  (local-set-key "\M-b" 'c-backward-into-nomenclature)
-  (setq cc-search-directories '("." "/usr/include" "/usr/local/include/*" "../*/include" "$WXWIN/include"))
-  (setq c-style-variables-are-local-p nil)
+  (setq cc-search-directories '("." "/usr/include" "/usr/local/include/*" "../*/include"))
                                         ;give me NO newline automatically after electric expressions are entered
   (setq c-auto-newline nil)
 
@@ -260,34 +272,6 @@ the directories in the INCLUDE environment variable."
               (message "NO COMPILATION ERRORS!")
               ))))
 
-  ;; (setq c-basic-offset 4)
-
-  ;; ;if (0)          becomes        if (0)
-  ;; ;    {                          {
-  ;; ;       ;                           ;
-  ;; ;    }                          }
-  ;; (c-set-offset 'substatement-open 0)
-
-  ;; ;first arg of arglist to functions: tabbed in once
-  ;; ;(default was c-lineup-arglist-intro-after-paren)
-  ;; (c-set-offset 'arglist-intro '+)
-
-  ;; ;second line of arglist to functions: tabbed in once
-  ;; ;(default was c-lineup-arglist)
-  ;; (c-set-offset 'arglist-cont-nonempty '+)
-
-  ;; ;switch/case:  make each case line indent from switch
-  ;; (c-set-offset 'case-label '+)
-
-  ;; ;make open-braces after a case: statement indent to 0 (default was '+)
-  ;; (c-set-offset 'statement-case-open 0)
-
-  ;; ;wxwdigets stuff
-  ;; (c-set-offset 'topmost-intro-cont 'c-wx-lineup-topmost-intro-cont)
-
-                                        ;make the ENTER key indent next line properly
-  (local-set-key "\C-m" 'newline-and-indent)
-
                                         ;syntax-highlight aggressively
                                         ;(setq font-lock-support-mode 'lazy-lock-mode)
   (setq lazy-lock-defer-contextually t)
@@ -303,19 +287,17 @@ the directories in the INCLUDE environment variable."
                                         ;1 (was imposed by gnu style by default)
   (setq c-label-minimum-indentation 0)
 
-  (setq gtags-suggested-key-mapping t)
   (gtags-mode 1)
-  (z/gtags-hook)
   )
-;; donot use c-mode-common-hook or cc-mode-hook because many major-modes use this hook
-(add-hook 'c-mode-common-hook 'my-c-mode-hook)
-;; (add-hook 'c-mode-hook 'my-c-mode-hook)
-;; (add-hook 'c++-mode-hook 'my-c-mode-hook)
 
+(require-package 'google-c-style)
 (require 'google-c-style)
 ;; donot use c-mode-common-hook or cc-mode-hook because many major-modes use this hook
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-;; (add-hook 'c-mode-hook 'google-set-c-style)
-(add-hook 'c++-mode-hook 'google-make-newline-indent)
+(dolist (hook '(c-mode-hook
+                c++-mode-hook))
+  (add-hook hook '(lambda ()
+                    (my-c-mode-hook)
+                    (google-set-c-style)
+                    (google-make-newline-indent))))
 
 (provide 'init-cc-mode)

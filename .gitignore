@@ -3,6 +3,7 @@
 *.tar.*
 *.tgz
 *.rar
+*.bak
 /url/cache
 /.emacs.desktop
 /auto-save-list
