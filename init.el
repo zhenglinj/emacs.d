@@ -49,6 +49,7 @@
     (require 'init-yasnippet))
 (require 'init-gtags)
 (require 'init-bm)
+(require 'init-speedbar)
 
 (require 'init-frame-hooks)
 (require 'init-xterm)
@@ -99,6 +100,7 @@
 (require 'init-rails)
 (require 'init-sql)
 (require 'init-cc-mode)
+(require 'init-go-mode)
 
 (require 'init-paredit)
 (require 'init-lisp)
