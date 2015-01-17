@@ -1,3 +1,59 @@
+# Introduction
+
+I fork this from [purcell/emacs.d](https://github.com/purcell/emacs.d ), and improved C/C++-mode Python-mode.
+
+**EMACS => EMACS Make All Computer Smart :-)**
+
+## Dependency
+
+**[GNU Global](http://www.gnu.org/software/global)**
+- Needed by `gtags`
+- You use this tool to navigate the C/C++/Java/Objective-C code.
+- Install through OS package manager
+
+**[Clang](http://clang.llvm.org)**
+- Needed by `auto-complete-clang`
+- Install through OS package manager
+
+**[Ctags](http://ctags.sourceforge.net)**
+- Needed by many tags related plugins
+- Install through OS package manager
+
+**flake8/pylint/pyflakes**
+- You need flake8/pylint/pyflakes for real time python syntax checker like flycheck
+- Install pip through OS package manager, then `pip install flake8/pylint/pyflakes`
+- On cygwin you need install `setuptool` in order to install `pip`.
+
+**virtualenv**
+- Needed by `jedi`
+- `pip install virtualenv`
+
+**jedi**
+- `jedi` used for python auto-complete
+- `pip install jedi`
+
+**python-epc**
+- Needed by `jedi`
+- `pip install epc`
+
+**sdcv**
+- StarDict Console Version
+- install through OS package manager
+
+**aspell or hunspell (RECOMMENDED), and corresponding dictionary (aspell-en, for example)**
+- Needed by `flyspell`
+- hunspell is the alternative of `aspell`. So you need only install either aspell or hunspell.
+- Install through OS package manager
+
+## Screenshot
+
+![](./.emacs.png )
+
+
+-Added by zhenglinj
+
+---
+
 # A reasonable Emacs config
 
 This is my emacs configuration tree, continually used and tweaked
