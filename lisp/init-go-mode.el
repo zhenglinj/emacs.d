@@ -1,3 +1,5 @@
+(require-package 'go-mode)
+(require-package 'go-autocomplete)
 (require 'go-mode)
 (require 'go-autocomplete)
 
@@ -5,10 +7,9 @@
 (add-hook 'go-mode-hook
 	  (lambda ()
 	    ;; gocode
-	    (company-mode -1)
-	    (auto-complete-mode 1)
-	    (setq ac-sources '(ac-source-go))
-	    ;; (call-process "gocode" nil nil nil "-s")
+	    (auto-complete-mode t)
+	    (setq ac-sources (append '(ac-source-go) ac-sources))
+	    (call-process "gocode" nil nil nil "-s")
 
 	    ;; ;; Imenu & Speedbar
 	    ;; (setq imenu-generic-expression
