@@ -67,6 +67,7 @@
 (require 'init-recentf)
 (require 'init-ido)
 (require 'init-hippie-expand)
+(require 'init-company)
 (require 'init-auto-complete)
 (require 'init-windows)
 (if (not (boundp 'light-weight-emacs))
