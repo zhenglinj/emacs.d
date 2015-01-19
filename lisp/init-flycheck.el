@@ -34,15 +34,26 @@
   (add-to-list 'flycheck-checkers 'c++-g++)
 
   ;; Python
+  ;; (add-hook 'python-mode-hook
+  ;;           '(lambda ()
+  ;;              (flycheck-select-checker 'python-pylint)))
 
+  ;; (flycheck-define-checker python-pyflakes
+  ;;   "A Python syntax and style checker using the pyflakes utility.
+  ;; See URL `http://pypi.python.org/pypi/pyflakes'."
+  ;;   :command ("pyflakes" source-inplace)
+  ;;   :error-patterns
+  ;;   ((error line-start (file-name) ":" line ":" (message) line-end))
+  ;;   :modes python-mode)
+  ;; (add-to-list 'flycheck-checkers 'python-pyflakes)
   )
 
-(require-package 'flycheck-pos-tip)
-(eval-after-load 'flycheck
-  ;; flycheck-pos-tip
-  '(custom-set-variables
-    '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
-  )
+;; (require-package 'flycheck-pos-tip)
+;; (eval-after-load 'flycheck
+;;   ;; flycheck-pos-tip
+;;   '(custom-set-variables
+;;     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
+;;   )
 
 
 (provide 'init-flycheck)
