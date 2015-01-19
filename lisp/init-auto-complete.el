@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Use Emacs' built-in TAB completion hooks to trigger AC (Emacs >= 23.2)
 ;;----------------------------------------------------------------------------
-(global-set-key [(control tab)] 'auto-complete)
+(define-key ac-mode-map [(control tab)] 'auto-complete)
 (setq tab-always-indent 'complete)  ;; use 't when auto-complete is disabled
 (add-to-list 'completion-styles 'initials t)
 ;; Stop completion-at-point from popping up completion buffers so eagerly
