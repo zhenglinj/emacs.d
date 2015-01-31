@@ -48,12 +48,12 @@
   ;; (add-to-list 'flycheck-checkers 'python-pyflakes)
   )
 
-;; (require-package 'flycheck-pos-tip)
-;; (eval-after-load 'flycheck
-;;   ;; flycheck-pos-tip
-;;   '(custom-set-variables
-;;     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
-;;   )
+(require-package 'flycheck-pos-tip)
+(eval-after-load 'flycheck
+  ;; flycheck-pos-tip
+  '(custom-set-variables
+    '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
+  )
 
 
 (provide 'init-flycheck)
