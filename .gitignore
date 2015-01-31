@@ -4,6 +4,7 @@
 *.tgz
 *.rar
 *.bak
+*-bak
 /url/cache
 /.emacs.desktop
 /auto-save-list
@@ -45,4 +46,5 @@ site-lisp/package/
 /ede-projects.el
 /lisp/init-local.el
 /yasnippet-snippets/
+/snippets/
 /site-lisp/*
