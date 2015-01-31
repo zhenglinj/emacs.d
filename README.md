@@ -24,17 +24,16 @@ I fork this from [purcell/emacs.d](https://github.com/purcell/emacs.d ), and imp
 - Install pip through OS package manager, then `pip install flake8/pylint/pyflakes`
 - On cygwin you need install `setuptool` in order to install `pip`.
 
-**virtualenv**
-- Needed by `jedi`
-- `pip install virtualenv`
+**jedi, virtualenv, python-epc**
+- `jedi` is used for python auto-complete
+- `virtualenv` `epc` is needed by `jedi`
+- `pip install jedi virtualenv epc`
 
-**jedi**
-- `jedi` used for python auto-complete
-- `pip install jedi`
-
-**python-epc**
-- Needed by `jedi`
-- `pip install epc`
+**ropemacs, rope, ropemode, pymacs**
+- `ropemacs` is a plugin for performing python refactorings in emacs
+- `rope` library, `ropemode` and `pymacs` is needed by `ropemacs`
+- `pip install ropemacs rope ropemode pymacs`
+- [`pymacs` from github](https://github.com/pinard/Pymacs ) `git clone git@github.com:pinard/Pymacs.git`
 
 **sdcv**
 - StarDict Console Version
