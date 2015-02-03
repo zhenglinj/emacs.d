@@ -12,6 +12,20 @@
   (setq flycheck-highlighting-mode nil)
 
   ;; C/C++
+  (add-hook 'c-mode-hook
+            '(lambda ()
+               (flycheck-select-checker 'c/c++-clang)
+               (setq-default flycheck-c/c++-clang-executable "clang")
+               (setq-default flycheck-clang-language-standard "c11")
+               ))
+
+  (add-hook 'c++-mode-hook
+            '(lambda ()
+               (flycheck-select-checker 'c/c++-clang)
+               (setq-default flycheck-c/c++-clang-executable "clang++")
+               (setq-default flycheck-clang-language-standard "c++11")
+               ))
+
   ;; Define a poor c/c++ checker (it fails when errors affect other files,
   ;; not the one being being checked actually)
   (defmacro flycheck-define-clike-checker (name command modes)
