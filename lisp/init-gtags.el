@@ -7,6 +7,10 @@
              (define-key gtags-mode-map [f12] 'gtags-find-tag-from-here)
              (define-key gtags-mode-map [S-f12] 'gtags-pop-stack)
              (define-key gtags-mode-map (kbd "ESC <f12>") 'gtags-pop-stack)))
+(add-hook 'gtags-select-mode-hook
+          '(lambda ()
+             (define-key gtags-select-mode-map [S-f12] 'gtags-pop-stack)
+             (define-key gtags-select-mode-map (kbd "ESC <f12>") 'gtags-pop-stack)))
 
 ;; @see http://emacs-fu.blogspot.com.au/2008/01/navigating-through-source-code-using.html
 (defun gtags-create-or-update ()
