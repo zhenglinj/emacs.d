@@ -1,4 +1,4 @@
-;; Auto-complet SECTION
+;; Auto-complete SECTION
 (require-package 'auto-complete-clang)
 (require 'auto-complete-clang)
 

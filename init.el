@@ -41,8 +41,8 @@
 (require-package 'scratch)
 (require-package 'mwe-log-commands)
 
-(require 'init-sdcv)
 (require 'init-popup)
+(require 'init-sdcv)
 (require 'init-move-window-buffer)
 ;; require init-yasnippet before init-auto-complete
 (if (not (boundp 'light-weight-emacs))

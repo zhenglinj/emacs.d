@@ -160,7 +160,6 @@
 ;; multiple-cursors
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-+") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 ;; From active region to multiple cursors:
 (global-set-key (kbd "C-c c r") 'set-rectangular-region-anchor)
@@ -401,8 +400,8 @@ point reaches the beginning or end of the buffer, stop there."
                        lisp-interaction-mode sh-mode sgml-mode))
   (font-lock-add-keywords
    mode
-   '(("\\<\\(FIXME\\|TODO\\|Todo\\)\\>" 1 font-lock-warning-face prepend)
-     ("\\<\\(FIXME\\|TODO\\|Todo\\):" 1 font-lock-warning-face prepend))))
+   '(("\\<\\(FIXME\\|TODO\\|Todo\\|XXX\\)\\>" 1 font-lock-warning-face prepend)
+     ("\\<\\(FIXME\\|TODO\\|Todo\\|XXX\\):" 1 font-lock-warning-face prepend))))
 
 ;; advanced comment function
 (defun my-comment-dwim-line (&optional arg)
