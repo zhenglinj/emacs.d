@@ -17,12 +17,29 @@
  /usr/include
 "
                 )))
+  (setq ac-clang-flags (append '("-std=c++11") ac-clang-flags))
   (setq ac-sources (append '(ac-source-clang
                              ac-source-gtags
                              ac-source-yasnippet
                              )
                            ac-sources)))
 (add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
+
+
+;; Flycheck SECTION
+(add-hook 'c-mode-hook
+          '(lambda ()
+             (flycheck-select-checker 'c/c++-clang)
+             (setq-default flycheck-c/c++-clang-executable "clang")
+             (setq-default flycheck-clang-language-standard "c11")
+             ))
+
+(add-hook 'c++-mode-hook
+          '(lambda ()
+             (flycheck-select-checker 'c/c++-clang)
+             (setq-default flycheck-c/c++-clang-executable "clang++")
+             (setq-default flycheck-clang-language-standard "c++11")
+             ))
 
 
 ;; C/C++ SECTION
