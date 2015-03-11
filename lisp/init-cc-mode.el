@@ -42,6 +42,12 @@
              ))
 
 
+;; Eldoc SECTION
+(autoload 'c-turn-on-eldoc-mode "c-eldoc")
+(add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
+(add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
+
+
 ;; C/C++ SECTION
 (add-to-list 'auto-mode-alist '("\\.[cC]\\'" . c-mode))
 (add-to-list 'auto-mode-alist '("\\.[hH]\\'" . c-mode))
