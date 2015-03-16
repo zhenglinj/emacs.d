@@ -157,6 +157,7 @@
 
 
 (require-package 'multiple-cursors)
+(require 'multiple-cursors)
 ;; multiple-cursors
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -519,8 +520,8 @@ buffer is not visiting a file."
 (eval-after-load "hideshow"
   '(progn (define-key hs-minor-mode-map [(shift mouse-2)] nil)
           (define-key hs-minor-mode-map (kbd "C-+") 'hs-toggle-hiding)
-          (define-key hs-minor-mode-map (kbd "C-\'") 'hs-hide-all)
-          (define-key hs-minor-mode-map (kbd "C-\"") 'hs-show-all)
+          ;; (define-key hs-minor-mode-map (kbd "C-\'") 'hs-hide-all)
+          ;; (define-key hs-minor-mode-map (kbd "C-\"") 'hs-show-all)
           ;; (define-key hs-minor-mode-map (kbd "C-\'") 'hs-hide-block)
           ;; (define-key hs-minor-mode-map (kbd "C-\"") 'hs-show-block)
           ;; (define-key hs-minor-mode-map [/C-c l] 'hs-hide-level)
