@@ -42,6 +42,7 @@ site-lisp/package/
 /eshell
 /.cask/
 /.sx/
+/org-clock-save.el
 /cfs-profiles.d/
 /ede-projects.el
 /lisp/init-local.el
