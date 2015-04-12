@@ -23,6 +23,12 @@
 (require-package 'smart-compile)
 (require 'smart-compile)
 (global-set-key [C-f7] 'smart-compile)
+(setq smart-compile-alist (append '(
+                                    ("\\.c\\'"          . "gcc -std=c11 -O2 %f -lm -o %n")
+                                    ;;  ("\\.c\\'"          . "gcc -O2 %f -lm -o %n && ./%n")
+                                    ("\\.[Cc]+[Pp]*\\'" . "g++ -std=c++11 -O2 %f -lm -o %n")
+                                    )
+                                  smart-compile-alist))
 
 
 (provide 'init-compile)
