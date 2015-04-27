@@ -29,16 +29,14 @@
 ;; Flycheck SECTION
 (add-hook 'c-mode-hook
           '(lambda ()
+             (setq flycheck-clang-language-standard "c11")
              (flycheck-select-checker 'c/c++-clang)
-             (setq-default flycheck-c/c++-clang-executable "clang")
-             (setq-default flycheck-clang-language-standard "c11")
              ))
 
 (add-hook 'c++-mode-hook
           '(lambda ()
+             (setq flycheck-clang-language-standard "c++11")
              (flycheck-select-checker 'c/c++-clang)
-             (setq-default flycheck-c/c++-clang-executable "clang++")
-             (setq-default flycheck-clang-language-standard "c++11")
              ))
 
 
