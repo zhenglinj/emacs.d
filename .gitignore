@@ -49,5 +49,7 @@ site-lisp/package/
 /yasnippet-snippets/
 /snippets/
 /site-lisp/*
+!/site-lisp/popup/
+!/site-lisp/sdcv/
 /.python-environments/
 /debug-init.el
