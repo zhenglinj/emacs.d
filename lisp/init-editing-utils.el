@@ -508,6 +508,18 @@ buffer is not visiting a file."
 
 
 
+;; License And Header Template
+(require-package 'lice)
+(require 'lice)
+(defun lice:insert-author (license)
+  (insert (format "Author: %s  <%s>\n\n"
+                  user-full-name user-mail-address)))
+(custom-set-variables
+ '(lice:header-spec
+   (quote
+    (lice:insert-copyright lice:insert-author lice:insert-license))))
+
+
 ;; hide / show
 (defvar hs--overlay-keymap nil "keymap for folding overlay")
 (let ((map (make-sparse-keymap)))
