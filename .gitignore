@@ -53,3 +53,5 @@ site-lisp/package/
 !/site-lisp/sdcv/
 /.python-environments/
 /debug-init.el
+/ido.last
+/recentf
