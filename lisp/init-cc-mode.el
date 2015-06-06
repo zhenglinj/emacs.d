@@ -48,7 +48,7 @@
 
 ;; C/C++ SECTION
 (add-to-list 'auto-mode-alist '("\\.[cC]\\'" . c-mode))
-(add-to-list 'auto-mode-alist '("\\.[hH]\\'" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.[hH]\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.[cC][pP][pP]\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.[hH][pP][pP]\\'" . c++-mode))
 
@@ -318,7 +318,14 @@ the directories in the INCLUDE environment variable."
                 c++-mode-hook))
   (add-hook hook '(lambda ()
                     (my-c-mode-hook)
-                    (google-set-c-style)
-                    (google-make-newline-indent))))
+
+                    ;; (google-set-c-style)
+                    ;; (google-make-newline-indent)
+
+                    (c-set-style "bsd")
+                    (setq tab-width 4 indent-tabs-mode nil)
+                    (setq c-basic-offset 4)
+                    (setq abbrev-mode t)
+                    )))
 
 (provide 'init-cc-mode)
