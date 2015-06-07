@@ -46,7 +46,7 @@ I fork this from [purcell/emacs.d](https://github.com/purcell/emacs.d ), and imp
 
 ## Screenshot
 
-![](./.emacs.png )
+![](./emacs.png )
 
 
 -Added by zhenglinj
