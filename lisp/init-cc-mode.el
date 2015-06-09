@@ -1,3 +1,11 @@
+;; Irony-mode SECTION
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+
 ;; Auto-complete SECTION
 (require-package 'auto-complete-clang)
 (require 'auto-complete-clang)
@@ -41,10 +49,9 @@
 
 
 ;; Eldoc SECTION
-(autoload 'c-turn-on-eldoc-mode "c-eldoc")
-(add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
-(add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
-
+(add-hook 'irony-mode-hook '(lambda ()
+                              (setq eldoc-mode t)
+                              (irony-eldoc)))
 
 ;; C/C++ SECTION
 (add-to-list 'auto-mode-alist '("\\.[cC]\\'" . c-mode))
