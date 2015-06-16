@@ -2,7 +2,7 @@
 (require 'yasnippet)
 
 ;; my private snippets
-(setq my-snippets (expand-file-name "~/.emacs.d/yasnippet-snippets"))
+(setq my-snippets (expand-file-name "~/.emacs.d/my-snippets"))
 (if (and  (file-exists-p my-snippets) (not (member my-snippets yas-snippet-dirs)))
     (add-to-list 'yas-snippet-dirs my-snippets))
 

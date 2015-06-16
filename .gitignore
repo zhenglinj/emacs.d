@@ -47,7 +47,7 @@ site-lisp/package/
 /cfs-profiles.d/
 /ede-projects.el
 /lisp/init-local.el
-/yasnippet-snippets/
+/my-snippets/
 /snippets/
 /site-lisp/*
 !/site-lisp/popup/
