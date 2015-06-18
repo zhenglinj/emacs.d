@@ -20,6 +20,10 @@
                                    ;; 'utf-16-le ;default windows unicode or
                                    'gb2312
                                  'utf-8))
-  (prefer-coding-system 'utf-8))
+  (prefer-coding-system (if (or (eq system-type 'windows-nt)
+                                (eq system-type 'cygwin))
+                            ;; 'utf-16-le ;default windows unicode or
+                            'gb2312
+                          'utf-8)))
 
 (provide 'init-locales)
