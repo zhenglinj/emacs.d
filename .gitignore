@@ -44,7 +44,7 @@ site-lisp/package/
 /.sx/
 /org-clock-save.el
 /ditaa*.jar
-/cfs-profiles.d/
+/chinese-fonts-setup
 /ede-projects.el
 /lisp/init-local.el
 /my-snippets/
