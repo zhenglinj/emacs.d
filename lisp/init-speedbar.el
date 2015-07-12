@@ -2,11 +2,11 @@
 (require 'speedbar)
 (setq speedbar-show-unknown-files t)
 (setq speedbar-verbosity-level 0)
-;; (setq speedbar-frame-parameters (quote
-;;                                  ((minibuffer)
-;;                                   (width . 35)
-;;                                   )))
-;; (setq speedbar-use-images nil)
+(setq speedbar-frame-parameters (quote
+                                 ((minibuffer)
+                                  (width . 35)
+                                  )))
+(setq speedbar-use-images nil)
 
 (global-set-key [(meta f11)] 'speedbar-get-focus)
 
