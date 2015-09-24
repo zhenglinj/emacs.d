@@ -7,6 +7,9 @@
 (require-package 'git-timemachine)
 
 
+(add-hook 'gitignore-mode-hook '(lambda ()
+                                  (auto-complete-mode)))
+
 (when (maybe-require-package 'magit)
   (setq-default
    magit-process-popup-time 10
