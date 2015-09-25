@@ -319,6 +319,10 @@ the directories in the INCLUDE environment variable."
   (add-hook hook '(lambda ()
                     (my-c-mode-hook)
                     (google-set-c-style)
-                    (google-make-newline-indent))))
+                    (google-make-newline-indent)
+
+                    (setq tab-width 4 indent-tabs-mode nil)
+                    (setq c-basic-offset 4)
+                    )))
 
 (provide 'init-cc-mode)
