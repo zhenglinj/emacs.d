@@ -9,7 +9,7 @@
   (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
 
   ;; DONOT highlight whole line with error
-  (setq flycheck-highlighting-mode nil)
+  (setq flycheck-highlighting-mode 'symbols)
 
   ;; C/C++
   ;; Define a poor c/c++ checker (it fails when errors affect other files,
