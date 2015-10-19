@@ -180,6 +180,8 @@
 (global-set-key (kbd "C-c c c") 'mc/edit-lines)
 (global-set-key (kbd "C-c c e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C-c c a") 'mc/edit-beginnings-of-lines)
+(custom-set-faces
+ '(mc/cursor-face ((t (:foreground "dim gray" :inverse-video t)))))
 
 
 ;; Train myself to use M-f and M-b instead

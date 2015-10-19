@@ -41,14 +41,15 @@
 
 
 ;; Eldoc SECTION
-(autoload 'c-turn-on-eldoc-mode "c-eldoc")
+;; (autoload 'c-turn-on-eldoc-mode "c-eldoc")
+(require 'c-eldoc)
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
-(add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
+;; (add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
 
 
 ;; C/C++ SECTION
 (add-to-list 'auto-mode-alist '("\\.[cC]\\'" . c-mode))
-(add-to-list 'auto-mode-alist '("\\.[hH]\\'" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.[hH]\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.[cC][pP][pP]\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.[hH][pP][pP]\\'" . c++-mode))
 
@@ -307,8 +308,6 @@ the directories in the INCLUDE environment variable."
                                         ;do not impose restriction that all lines not top-level be indented at least
                                         ;1 (was imposed by gnu style by default)
   (setq c-label-minimum-indentation 0)
-
-  (gtags-mode 1)
   )
 
 (require-package 'google-c-style)
