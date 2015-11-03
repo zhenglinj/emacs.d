@@ -14,24 +14,28 @@
 
 ;; Elpy, the Emacs Lisp Python Environment
 ;; https://github.com/jorgenschaefer/elpy
-(when (require 'elpy nil t)
-  ;; disable flymake, company, eldoc modules
-  (setq elpy-modules '(elpy-module-sane-defaults
-                       ;; elpy-module-company
-                       ;; elpy-module-eldoc
-                       ;; elpy-module-flymake
-                       elpy-module-highlight-indentation
-                       elpy-module-pyvenv
-                       elpy-module-yasnippet))
-  (elpy-enable)
-  ;; (setq elpy-rpc-backend "jedi")
-  )
+;; (when (require 'elpy nil t)
+;;   ;; disable flymake, company, eldoc modules
+;;   (setq elpy-modules '(elpy-module-sane-defaults
+;;                        ;; elpy-module-company
+;;                        ;; elpy-module-eldoc
+;;                        ;; elpy-module-flymake
+;;                        elpy-module-highlight-indentation
+;;                        elpy-module-pyvenv
+;;                        elpy-module-yasnippet))
+;;   (elpy-enable)
+;;   ;; (setq elpy-rpc-backend "jedi")
+;;   )
 
 
+(require-package 'python-environment)
+
+(require-package 'highlight-indentation)
+(add-hook 'python-mode-hook 'highlight-indentation-mode)
+
 ;; jedi (Jedi.el is a Python auto-completion package for Emacs.)
 ;; http://tkf.github.io/emacs-jedi/latest/#configuration
-
-(require-package 'jedi)
+;; (require-package 'jedi)                 ; use site-list/emacs-jedi
 (autoload 'jedi:setup "jedi" nil t)
 (setq jedi:setup-keys t)
 (setq jedi:use-shortcuts t)
