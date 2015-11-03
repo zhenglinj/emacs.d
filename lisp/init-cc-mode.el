@@ -42,9 +42,21 @@
 
 ;; Eldoc SECTION
 ;; (autoload 'c-turn-on-eldoc-mode "c-eldoc")
+(require-package 'c-eldoc)
 (require 'c-eldoc)
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
 ;; (add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
+
+
+(require 'cc-mode)
+(require-package 'srefactor)
+;; (require 'srefactor)
+(autoload 'srefactor-refactor-at-point "srefactor")
+
+;; OPTIONAL: ADD IT ONLY IF YOU USE C/C++.
+;; (semantic-mode 1)
+(define-key c-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
+(define-key c++-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
 
 
 ;; C/C++ SECTION
@@ -54,7 +66,6 @@
 (add-to-list 'auto-mode-alist '("\\.[hH][pP][pP]\\'" . c++-mode))
 
 
-(require 'cc-mode)
 (defun c-wx-lineup-topmost-intro-cont (langelem)
   (save-excursion
     (beginning-of-line)
