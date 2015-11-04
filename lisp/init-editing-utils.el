@@ -416,8 +416,8 @@ point reaches the beginning or end of the buffer, stop there."
                        lisp-interaction-mode sh-mode sgml-mode))
   (font-lock-add-keywords
    mode
-   '(("\\<\\(FIXME\\|TODO\\|Todo\\|XXX\\)\\>" 1 font-lock-warning-face prepend)
-     ("\\<\\(FIXME\\|TODO\\|Todo\\|XXX\\):" 1 font-lock-warning-face prepend))))
+   '(("\\<\\(FIXME\\|TODO\\|Todo\\|todo\\|XXX\\)\\>" 1 font-lock-warning-face prepend)
+     ("\\<\\(FIXME\\|TODO\\|Todo\\|todo\\|XXX\\):" 1 font-lock-warning-face prepend))))
 
 ;; advanced comment function
 (defun my-comment-dwim-line (&optional arg)
