@@ -11,6 +11,8 @@
   ;; DONOT highlight whole line with error
   (setq flycheck-highlighting-mode 'symbols)
 
+
+
   ;; C/C++
   ;; Define a poor c/c++ checker (it fails when errors affect other files,
   ;; not the one being being checked actually)
@@ -82,8 +84,60 @@
   ;;   ((error line-start (file-name) ":" line ":" (message) line-end))
   ;;   :modes python-mode)
   ;; (add-to-list 'flycheck-checkers 'python-pyflakes)
+
+
+
+  (when (fboundp 'define-fringe-bitmap)
+    (define-fringe-bitmap 'flycheck-fringe-bitmap-exclamation-mark
+      (vector #b00000000
+              #b00000000
+              #b00000000
+              #b00111000
+              #b00111000
+              #b00111000
+              #b00111000
+              #b00111000
+              #b00111000
+              #b00111000
+              #b00111000
+              #b00000000
+              #b00000000
+              #b00111000
+              #b00111000
+              #b00000000
+              #b00000000)))
+
+  (flycheck-define-error-level 'error
+    :severity 100
+    :compilation-level 2
+    :overlay-category 'flycheck-error-overlay
+    :fringe-bitmap 'flycheck-fringe-bitmap-exclamation-mark
+    :fringe-face 'flycheck-fringe-error
+    :error-list-face 'flycheck-error-list-error)
+
+  (flycheck-define-error-level 'warning
+    :severity 10
+    :compilation-level 1
+    :overlay-category 'flycheck-warning-overlay
+    :fringe-bitmap 'flycheck-fringe-bitmap-exclamation-mark
+    :fringe-face 'flycheck-fringe-warning
+    :error-list-face 'flycheck-error-list-warning)
+
+  (flycheck-define-error-level 'info
+    :severity -10
+    :compilation-level 0
+    :overlay-category 'flycheck-info-overlay
+    :fringe-bitmap 'flycheck-fringe-bitmap-exclamation-mark
+    :fringe-face 'flycheck-fringe-info
+    :error-list-face 'flycheck-error-list-info)
+
+  (custom-set-faces
+   '(flycheck-fringe-error ((t (:background "#c82829" :foreground "white smoke"))))
+   '(flycheck-fringe-info ((t (:background "#3e999f" :foreground "white smoke"))))
+   '(flycheck-fringe-warning ((t (:background "#f5871f" :foreground "white smoke")))))
   )
 
+
 (require-package 'flycheck-pos-tip)
 (eval-after-load 'flycheck
   ;; flycheck-pos-tip
