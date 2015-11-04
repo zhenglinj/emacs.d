@@ -1,3 +1,36 @@
+;; Irony-mode
+(require-package 'irony)
+(require 'irony)
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+(require-package 'irony-eldoc)
+(require 'irony-eldoc)
+
+;; (require 'ac-irony)
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async)
+  ;; irony-eldoc
+  (irony-eldoc)
+  ;; ;; ac-irony
+  ;; (add-to-list 'ac-sources 'ac-source-irony)
+  )
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+(require-package 'flycheck-irony)
+(require 'flycheck-irony)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+
 ;; Auto-complete SECTION
 (require-package 'auto-complete-clang)
 (require 'auto-complete-clang)
@@ -40,14 +73,6 @@
              ))
 
 
-;; Eldoc SECTION
-;; (autoload 'c-turn-on-eldoc-mode "c-eldoc")
-(require-package 'c-eldoc)
-(require 'c-eldoc)
-(add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
-;; (add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
-
-
 (require 'cc-mode)
 (require-package 'srefactor)
 ;; (require 'srefactor)
@@ -66,34 +91,6 @@
 (add-to-list 'auto-mode-alist '("\\.[hH][pP][pP]\\'" . c++-mode))
 
 
-(defun c-wx-lineup-topmost-intro-cont (langelem)
-  (save-excursion
-    (beginning-of-line)
-    (if (re-search-forward "EVT_" (line-end-position) t)
-        'c-basic-offset
-      (c-lineup-topmost-intro-cont langelem))))
-
-(require 'cl)
-
-(defun file-in-directory-list-p (file dirlist)
-  "Returns true if the file specified is contained within one of
-the directories in the list. The directories must also exist."
-  (let ((dirs (mapcar 'expand-file-name dirlist))
-        (filedir (expand-file-name (file-name-directory file))))
-    (and
-     (file-directory-p filedir)
-     (member-if (lambda (x) ; Check directory prefix matches
-                  (string-match (substring x 0 (min(length filedir) (length x))) filedir))
-                dirs))))
-
-(defun buffer-standard-include-p ()
-  "Returns true if the current buffer is contained within one of
-the directories in the INCLUDE environment variable."
-  (and (getenv "INCLUDE")
-       (file-in-directory-list-p buffer-file-name (split-string (getenv "INCLUDE") path-separator))))
-
-(add-to-list 'magic-fallback-mode-alist '(buffer-standard-include-p . c++-mode))
-
 ;; ===============================================================
 ;; gdb (gud)
 ;; ===============================================================
