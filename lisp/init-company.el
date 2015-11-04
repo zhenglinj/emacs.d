@@ -4,6 +4,8 @@
 ;; (add-hook 'after-init-hook 'global-company-mode)
 
 (define-key company-mode-map [(control tab)] 'company-complete)
+(define-key company-active-map (kbd "\C-n") 'company-select-next)
+(define-key company-active-map (kbd "\C-p") 'company-select-previous)
 (setq company-require-match nil)
 
 (if (fboundp 'evil-declare-change-repeat)
@@ -23,18 +25,17 @@
      (setq company-idle-delay 0.2)
      ))
 
-(require 'color)
-
-(add-hook 'after-init-hook
-          '(lambda ()
-             (let ((bg (face-attribute 'default :background)))
-               (custom-set-faces
-                `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 10)))))
-                `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 20)))))
-                `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 15)))))
-                `(company-tooltip-selection ((t (:background ,(color-lighten-name bg 5)))))
-                ;; `(company-tooltip-selection ((t (:inherit font-lock-function-name-face :background ,(color-lighten-name bg 5)))))
-                ;; `(company-tooltip-common ((t (:inherit font-lock-constant-face))))
-                ))))
+;; (require 'color)
+;; (add-hook 'after-init-hook
+;;           '(lambda ()
+;;              (let ((bg (face-attribute 'default :background)))
+;;                (custom-set-faces
+;;                 `(company-tooltip ((t (:background ,(color-lighten-name bg 20)))))
+;;                 `(company-tooltip-selection ((t (:background ,(color-lighten-name bg 10)))))
+;;                 `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 40)))))
+;;                 `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 30)))))
+;;                 ;; `(company-tooltip-selection ((t (:inherit font-lock-function-name-face :background ,(color-lighten-name bg 5)))))
+;;                 `(company-tooltip-common ((t (:inherit font-lock-constant-face))))
+;;                 ))))
 
 (provide 'init-company)
