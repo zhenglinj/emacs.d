@@ -21,7 +21,7 @@
     (setq ydcv-dictionary-simple-list '("langdao"))
     (setq ydcv-dictionary-complete-list
           '("langdao"
-            ;; "21shiji"
+            "21shiji"
             "dictd_www.dict.org_wn"))
     (global-set-key (kbd "C-c ; b") 'ydcv-search-input)
     (global-set-key (kbd "C-c ; t") 'ydcv-search-pointer+)
