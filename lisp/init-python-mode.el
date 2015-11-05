@@ -49,4 +49,9 @@
 (setq jedi:complete-on-dot t)           ; optional
 
 
+
+;; live-py-plugin
+(require-package 'live-py-mode)
+(require 'live-py-mode)
+
 (provide 'init-python-mode)
