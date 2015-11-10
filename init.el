@@ -118,6 +118,7 @@
   (require 'init-spelling))
 
 (require 'init-misc)
+(require 'init-modeline)
 
 (if *is-a-mac*
     (require 'init-dash)
