@@ -51,6 +51,7 @@ site-lisp/package/
 /snippets/
 /site-lisp/*
 !/site-lisp/popup/
+!/site-lisp/figlet/
 !/site-lisp/sdcv/
 /.python-environments/
 /debug-init.el

@@ -526,6 +526,9 @@ buffer is not visiting a file."
    (quote
     (lice:insert-copyright lice:insert-author lice:insert-license))))
 
+;; Annoy people with big, ascii art text
+(require 'figlet)
+
 
 ;; hide / show
 (defvar hs--overlay-keymap nil "keymap for folding overlay")
@@ -555,6 +558,7 @@ buffer is not visiting a file."
           ;; (define-key hs-minor-mode-map [/C-c t] 'hs-toggle-hiding)
           (define-key hs-minor-mode-map (kbd "<left-fringe> <mouse-2>")
             'hs-mouse-toggle-hiding)))
+(delight '((hs-minor-mode nil "hideshow")))
 (dolist (hook '(prog-mode-hook
                 html-mode-hook
                 css-mode-hook))
