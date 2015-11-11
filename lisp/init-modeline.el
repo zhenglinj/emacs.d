@@ -35,12 +35,12 @@ ADDITIONAL-SEGMENTS are inserted on the right, between `global' and
      auto-compile
      (z/buffer-mule-info buffer-modified buffer-id z/which-function remote-host)
      major-mode
-     ((flycheck-error flycheck-warning flycheck-info)
-      :when active)
+     (((flycheck-error flycheck-warning flycheck-info)
+       :when active)
+      (version-control :when active))
      (((minor-modes :separator " ")
        process)
       :when active)
-     (version-control :when active)
      (erc-track :when active)
      (org-pomodoro :when active)
      (org-clock :when active)
@@ -50,14 +50,25 @@ ADDITIONAL-SEGMENTS are inserted on the right, between `global' and
      selection-info
      ((
        ;; buffer-encoding-abbrev
-       buffer-size
        point-position
-       line-column)
+       line-column
+       buffer-size)
       :separator " | ")
      (global :when active)
      ,@additional-segments
      buffer-position
      hud)))
+
+;; Shorten minor-mode-alist in the modeline
+(delight '((eldoc-mode nil "eldoc")
+           (global-whitespace-newline-mode nil "whitespace")
+           (global-whitespace-mode nil "whitespace")
+           (whitespace-newline-mode nil "whitespace")
+           (whitespace-mode nil "whitespace")
+           (abbrev-mode nil "abbrev")
+           (auto-complete-mode nil "auto-complete")
+           (yas-minor-mode nil "yasnippet")
+           ))
 
 (add-hook 'after-init-hook
           (lambda ()
