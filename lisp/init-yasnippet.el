@@ -1,5 +1,6 @@
 ;; (require-package 'yasnippet '(0 8 0) nil)
 (require 'yasnippet)
+(delight '((yas-minor-mode nil "yasnippet")))
 
 ;; my private snippets
 (setq my-snippets (expand-file-name "~/.emacs.d/my-snippets"))

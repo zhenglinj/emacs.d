@@ -1,6 +1,7 @@
 (require-package 'elisp-slime-nav)
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
   (add-hook hook 'turn-on-elisp-slime-nav-mode))
+(delight '((elisp-slime-nav-mode nil "elisp-slime-nav")))
 
 (require-package 'lively)
 

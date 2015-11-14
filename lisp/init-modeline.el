@@ -66,8 +66,6 @@ ADDITIONAL-SEGMENTS are inserted on the right, between `global' and
            (whitespace-newline-mode nil "whitespace")
            (whitespace-mode nil "whitespace")
            (abbrev-mode nil "abbrev")
-           (auto-complete-mode nil "auto-complete")
-           (yas-minor-mode nil "yasnippet")
            ))
 
 (add-hook 'after-init-hook

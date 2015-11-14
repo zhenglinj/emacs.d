@@ -1,5 +1,7 @@
 (require-package 'auto-complete)
 (require 'auto-complete-config)
+(delight '((auto-complete-mode nil "auto-complete")))
+
 (global-auto-complete-mode t)
 (setq-default ac-expand-on-auto-complete nil)
 (setq-default ac-auto-start nil)
