@@ -31,9 +31,9 @@ ADDITIONAL-SEGMENTS are inserted on the right, between `global' and
       :fallback evil-state
       :separator "|"
       :face highlight-face)
-     anzu
-     auto-compile
-     (z/buffer-mule-info buffer-modified buffer-id z/which-function remote-host)
+     (anzu
+      auto-compile
+      z/buffer-mule-info buffer-modified buffer-id z/which-function remote-host)
      major-mode
      (((flycheck-error flycheck-warning flycheck-info)
        :when active)
