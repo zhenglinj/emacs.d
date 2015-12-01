@@ -35,6 +35,9 @@
 (require-package 'auto-complete-clang)
 (require 'auto-complete-clang)
 
+(require-package 'ac-c-headers)
+(require 'ac-c-headers)
+
 (defun my-ac-cc-mode-setup ()
   (setq ac-clang-flags
         (mapcar(lambda (item)(concat "-I" item))
@@ -51,11 +54,11 @@
 "
                 )))
   (setq ac-clang-flags (append '("-std=c++11") ac-clang-flags))
-  (setq ac-sources (append '(ac-source-clang
-                             ac-source-gtags
-                             ;; ac-source-yasnippet
-                             )
-                           ac-sources)))
+  (add-to-list 'ac-sources 'ac-source-clang)
+  (add-to-list 'ac-sources 'ac-source-gtags)
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+  (add-to-list 'ac-sources 'ac-source-c-header-symbols t)
+  )
 (add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
 
 
