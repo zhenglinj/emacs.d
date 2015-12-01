@@ -347,6 +347,41 @@ point reaches the beginning or end of the buffer, stop there."
                 'smarter-move-beginning-of-line)
 ;; }
 
+(defun grep-find (command-args)
+  "Run grep via find, with user-specified args COMMAND-ARGS.
+Collect output in a buffer.
+While find runs asynchronously, you can use the \\[next-error] command
+to find the text that grep hits refer to.
+
+This command uses a special history list for its arguments, so you can
+easily repeat a find command."
+  (interactive
+   (progn
+     (grep-compute-defaults)
+     (if grep-find-command
+         (list
+          (read-shell-command
+           "Run find (like this): "
+           (if (region-active-p)
+               (let ((str
+                      (buffer-substring-no-properties
+                       (region-beginning)
+                       (region-end))))
+                 (cons (replace-regexp-in-string
+                        " {}"
+                        (concat str " {}")
+                        (car grep-find-command))
+                       (+ (cdr grep-find-command)
+                          (length str))))
+             grep-find-command) 'grep-find-history))
+       ;; No default was set
+       (read-string
+        "compile.el: No `grep-find-command' command available. Press RET.")
+       (list nil))))
+  (when command-args
+    (let ((null-device nil))
+      (grep command-args))))
+
 (dolist (mode '(c-mode c++-mode objc-mode java-mode jde-mode
                        perl-mode cperl-mode php-mode python-mode ruby-mode
                        lisp-mode emacs-lisp-mode xml-mode nxml-mode html-mode
