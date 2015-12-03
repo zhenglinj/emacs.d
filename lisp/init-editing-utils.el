@@ -501,6 +501,11 @@ buffer is not visiting a file."
 ;; Annoy people with big, ascii art text
 (require 'figlet)
 
+;; Visual navigation through mark rings
+(require-package 'back-button)
+(require 'back-button)
+(back-button-mode 1)
+(delight '((back-button-mode nil "back-button")))
 
 ;; hide / show
 (defvar hs--overlay-keymap nil "keymap for folding overlay")
