@@ -62,6 +62,7 @@
 (require 'init-gtags)
 (require 'init-bm)
 (require 'init-speedbar)
+(require 'init-geeknote)
 
 (require 'init-frame-hooks)
 (require 'init-xterm)
