@@ -425,50 +425,47 @@ Like eclipse's Ctrl+Alt+F."
         (untabify start (point-max))
         (indent-region start (point-max) nil)))))
 
-(defun cxx-file-p (file)
+(defun xxx-file-p (file filename-exts)
+  "File name with extension in the list"
   (let ((file-extension (file-name-extension file)))
     (and file-extension
          (string= file (file-name-sans-versions file))
          (find file-extension
-               '("h" "hpp" "hxx" "c" "cpp" "cxx" "cc")
+               filename-exts
                :test 'string=))))
 
-(defun format-cxx-file (file)
-  "Format a c/c++ file."
-  (interactive "F")
-  (if (cxx-file-p file)
+(defun format-xxx-file (file)
+  "Format a C/C++/Java file."
+  (interactive "FFormat C/C++/Java file: ")
+  (if (xxx-file-p file '("h" "hpp" "hxx" "c" "cpp" "cxx" "cc" "java"))
       (let ((get-fb (get-file-buffer file))
             (buffer (find-file-noselect file))) ;; open buffer
         (save-excursion
           (set-buffer buffer)
-          ;; (mark-whole-buffer)
           (when (fboundp 'whitespace-cleanup)
             (whitespace-cleanup))
-          ;; (c-set-style "stroustrup")
           (untabify (point-min) (point-max))
           (indent-region (point-min) (point-max))
           (save-buffer)
           (if (not get-fb)
               (kill-buffer))
-          ;; (kill-buffer)
-          ;; (message "Formated c++ file:%s" file)
           ))
-    ;; (message "%s isn't a c++ file" file)
     ))
 
-(defun format-cxx-dired (dirname)
-  "Format all c/c++ file in a directory."
-  (interactive "D")
+(defun format-xxx-dired (dirname)
+  "Format all C/C++/Java file in a directory."
+  (interactive "DFormat C/C++/Java files in directiory: ")
   ;; (message "directory:%s" dirname)
   (let ((files (directory-files dirname t)))
     (dolist (x files)
       (if (not (string= "." (substring (file-name-nondirectory x) 0 1)))
           (if (file-directory-p x)
-              (format-cxx-dired x)
+              (format-xxx-dired x)
             (if (and (file-regular-p x)
                      (not (file-symlink-p x))
-                     (cxx-file-p x))
-                (format-cxx-file x)))))))
+                     (xxx-file-p x))
+                (format-xxx-file x)))))))
+
 (global-set-key (kbd "ESC <f8>") 'format-region) ; putty
 (global-set-key (kbd "C-S-f") 'format-region)
 
