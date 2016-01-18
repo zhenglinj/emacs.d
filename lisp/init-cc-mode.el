@@ -54,12 +54,12 @@
 "
                 )))
   (setq ac-clang-flags (append '("-std=c++11") ac-clang-flags))
-  (add-to-list 'ac-sources 'ac-source-clang)
   (add-to-list 'ac-sources 'ac-source-gtags)
   (add-to-list 'ac-sources 'ac-source-c-headers)
-  (add-to-list 'ac-sources 'ac-source-c-header-symbols t)
+  (add-to-list 'ac-sources 'ac-source-clang)
   )
-(add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
+(dolist (hook '(c-mode-hook c++-mode-hook))
+  (add-hook hook 'my-ac-cc-mode-setup))
 
 
 ;; Flycheck SECTION
