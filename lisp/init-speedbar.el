@@ -8,7 +8,7 @@
                                   )))
 (setq speedbar-use-images nil)
 
-(global-set-key [(meta f4)] 'speedbar-get-focus)
+(global-set-key [(meta f11)] 'speedbar-get-focus)
 
 ;; ;; Sr-speedbar config
 ;; (require-package 'sr-speedbar)
