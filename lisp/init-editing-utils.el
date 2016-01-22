@@ -425,19 +425,19 @@ Like eclipse's Ctrl+Alt+F."
         (untabify start (point-max))
         (indent-region start (point-max) nil)))))
 
-(defun xxx-file-p (file filename-exts)
-  "File name with extension in the list"
+(defun xxx-file-p (file)
+  "File name with extension (C/C++/Java) in the list"
   (let ((file-extension (file-name-extension file)))
     (and file-extension
          (string= file (file-name-sans-versions file))
          (find file-extension
-               filename-exts
+               '("h" "hpp" "hxx" "hh" "c" "cpp" "cxx" "cc" "java")
                :test 'string=))))
 
 (defun format-xxx-file (file)
   "Format a C/C++/Java file."
   (interactive "FFormat C/C++/Java file: ")
-  (if (xxx-file-p file '("h" "hpp" "hxx" "c" "cpp" "cxx" "cc" "java"))
+  (if (xxx-file-p file)
       (let ((get-fb (get-file-buffer file))
             (buffer (find-file-noselect file))) ;; open buffer
         (save-excursion
@@ -449,6 +449,7 @@ Like eclipse's Ctrl+Alt+F."
           (save-buffer)
           (if (not get-fb)
               (kill-buffer))
+          (message "Formated c++ file:%s ...... OK" file)
           ))
     ))
 
