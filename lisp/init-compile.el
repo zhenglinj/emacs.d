@@ -64,6 +64,7 @@
                                     ("\\.c\\'"          . "gcc -std=c11 -O2 %f -lm -o %n")
                                     ;;  ("\\.c\\'"          . "gcc -O2 %f -lm -o %n && ./%n")
                                     ("\\.[Cc]+[Pp]*\\'" . "g++ -std=c++11 -O2 %f -lm -o %n")
+                                    ("\\.java\\'"       . "javac -J-Duser.language=en -encoding utf-8 %f")
                                     )
                                   smart-compile-alist))
 
