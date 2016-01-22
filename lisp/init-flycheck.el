@@ -139,11 +139,6 @@
 
 
 (require-package 'flycheck-pos-tip)
-(eval-after-load 'flycheck
-  ;; flycheck-pos-tip
-  '(custom-set-variables
-    '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
-  )
-
+(require 'flycheck-pos-tip)
 
 (provide 'init-flycheck)
