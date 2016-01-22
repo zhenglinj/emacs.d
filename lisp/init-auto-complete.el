@@ -44,11 +44,11 @@
              '(ac-source-imenu
                ac-source-dictionary
                ac-source-words-in-buffer
-               ac-source-yasnippet
                ac-source-filename
                ac-source-files-in-current-dir
-               ;; ac-source-words-in-same-mode-buffers
-               ;; ac-source-words-in-all-buffer
+               ac-source-words-in-same-mode-buffers
+               ac-source-words-in-all-buffer
+               ac-source-yasnippet
                ))
 
 (dolist (mode '(log-edit-mode org-mode text-mode haml-mode
