@@ -1,0 +1,30 @@
+;; ess-mode configuration
+(require-package 'ess)
+(require 'ess)
+
+(setq ess-ask-for-ess-directory t)
+(setq ess-eval-visibly-p nil)
+(setq ess-local-process-name "R")
+(setq ess-history-directory "~/.emacs.d/ess/history")
+(setq ansi-color-for-comint-mode 'filter)
+(setq comint-scroll-to-bottom-on-input t)
+(setq comint-scroll-to-bottom-on-output t)
+(setq comint-move-point-for-output t)
+
+(add-hook 'ess-mode-hook (lambda ()
+                           (run-hooks 'prog-mode-hook)
+                           (define-key ess-mode-map (kbd "<C-M-return>")
+                             'ess-eval-region-or-line-and-step)))
+
+(require-package 'ess-R-data-view)
+(require 'ess-R-data-view)
+(require-package 'ess-R-object-popup)
+(require 'ess-R-object-popup)
+(require-package 'ess-smart-equals)
+(require 'ess-smart-equals)
+(require-package 'ess-smart-underscore)
+(require 'ess-smart-underscore)
+(require-package 'ess-view)
+(require 'ess-view)
+
+(provide 'init-ess)

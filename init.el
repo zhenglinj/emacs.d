@@ -119,6 +119,7 @@
 (require 'init-cc-mode)
 (require 'init-go-mode)
 (require 'init-csharp-mode)
+(require 'init-ess)
 
 (require 'init-paredit)
 (require 'init-lisp)
