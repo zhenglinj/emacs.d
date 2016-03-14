@@ -13,6 +13,7 @@
 (add-to-list 'zeal-at-point-mode-alist '(python-mode . "python 3"))
 (add-to-list 'zeal-at-point-mode-alist '(cmake-mode . "cmake"))
 (add-to-list 'zeal-at-point-mode-alist '(emacs-lisp-mode . "Emacs_lisp"))
+(add-to-list 'zeal-at-point-mode-alist '(csharp-mode . ".net framework"))
 
 ;; Additionally, the buffer-local variable zeal-at-point-docset can be set in a specific mode hook (or file/directory local variables) to programmatically override the guessed docset. For example:
 
