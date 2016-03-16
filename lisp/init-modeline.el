@@ -12,6 +12,8 @@
 (custom-set-faces
  '(powerline-inactive1 ((t (:inherit mode-line-inactive))))
  '(powerline-inactive2 ((t (:inherit mode-line-inactive)))))
+(custom-set-variables
+ '(powerline-default-separator nil))
 
 ;; (add-hook 'after-init-hook
 ;;           (lambda ()
