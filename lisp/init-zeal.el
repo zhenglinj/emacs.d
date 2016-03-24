@@ -6,15 +6,21 @@
 ;; (global-set-key "\C-cd" 'zeal-at-point)
 
 ;; Zeal queries can be narrowed down with a docset prefix. You can customize the relations between docsets and major modes.
-(require 'zeal-at-point)
+(when (not (*is-a-mac*))
+  (when (not (package-installed-p 'zeal-at-point))
+    (require-package 'zeal-at-point)))
+
 (add-to-list 'zeal-at-point-mode-alist '(c-mode . "c"))
 (add-to-list 'zeal-at-point-mode-alist '(c++-mode . "c++"))
 (add-to-list 'zeal-at-point-mode-alist '(go-mode . "go"))
+(add-to-list 'zeal-at-point-mode-alist '(perl-mode . "perl"))
 (add-to-list 'zeal-at-point-mode-alist '(python-mode . "python 3"))
 (add-to-list 'zeal-at-point-mode-alist '(cmake-mode . "cmake"))
 (add-to-list 'zeal-at-point-mode-alist '(emacs-lisp-mode . "Emacs_lisp"))
 (add-to-list 'zeal-at-point-mode-alist '(csharp-mode . ".net framework"))
 (add-to-list 'zeal-at-point-mode-alist '(ess-mode . "r"))
+
+(global-set-key (kbd "C-c D") 'zeal-at-point)
 
 ;; Additionally, the buffer-local variable zeal-at-point-docset can be set in a specific mode hook (or file/directory local variables) to programmatically override the guessed docset. For example:
 
