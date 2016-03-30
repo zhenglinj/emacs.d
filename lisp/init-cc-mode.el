@@ -8,7 +8,9 @@
 (require-package 'irony-eldoc)
 (require 'irony-eldoc)
 
-;; (require 'ac-irony)
+(require 'ac-irony)
+;; (require-package 'company-irony)
+;; (require 'company-irony)
 
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
 ;; irony-mode's buffers by irony-mode's function
@@ -19,8 +21,8 @@
     'irony-completion-at-point-async)
   ;; irony-eldoc
   (irony-eldoc)
-  ;; ;; ac-irony
-  ;; (add-to-list 'ac-sources 'ac-source-irony)
+  ;; ac-irony
+  (add-to-list 'ac-sources 'ac-source-irony)
   )
 (add-hook 'irony-mode-hook 'my-irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
@@ -38,20 +40,40 @@
 (require-package 'ac-c-headers)
 (require 'ac-c-headers)
 
+;; echo "" | clang -xc++ -E -v -
 (defun my-ac-cc-mode-setup ()
   (setq ac-clang-flags
         (mapcar(lambda (item)(concat "-I" item))
                (split-string
+                ;; ;; Linux
+                ;; "
+                ;;  /usr/include/c++/4.8
+                ;;  /usr/include/i386-linux-gnu/c++/4.8
+                ;;  /usr/include/c++/4.8/backward
+                ;;  /usr/lib/gcc/i686-linux-gnu/4.8/include
+                ;;  /usr/local/include
+                ;;  /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed
+                ;;  /usr/include/i386-linux-gnu
+                ;;  /usr/include
+                ;; "
+                ;; OSX xcode
                 "
- /usr/include/c++/4.8
- /usr/include/i386-linux-gnu/c++/4.8
- /usr/include/c++/4.8/backward
- /usr/lib/gcc/i686-linux-gnu/4.8/include
- /usr/local/include
- /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed
- /usr/include/i386-linux-gnu
- /usr/include
-"
+                 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1
+                 /usr/local/include
+                 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.3.0/include
+                 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+                 /usr/include
+                 /System/Library/Frameworks
+                 /Library/Frameworks
+                "
+                ;; ;; OSX brew
+                ;; "
+                ;;  /usr/local/include
+                ;;  /usr/local/Cellar/llvm/3.6.2/lib/clang/3.6.2/include
+                ;;  /usr/include
+                ;;  /System/Library/Frameworks
+                ;;  /Library/Frameworks
+                ;; "
                 )))
   (setq ac-clang-flags (append '("-std=c++11") ac-clang-flags))
   (add-to-list 'ac-sources 'ac-source-gtags)
@@ -113,7 +135,7 @@
         (win1 (split-window nil (/ (* (window-height) 8) 10)))
         (win2 (split-window nil (/ (* (window-height) 4) 8)))
         (win3 (split-window nil z/gud-gdb-buffer-width 'right)) ;input/output
-	)
+        )
     (gdb-set-window-buffer (gdb-get-buffer-create 'gdb-inferior-io) nil win3)
     (select-window win2)
     (set-window-buffer
