@@ -2,6 +2,7 @@
 (require-package 'ess)
 (require 'ess)
 
+(setq ess-use-auto-complete t)
 (setq ess-ask-for-ess-directory t)
 (setq ess-eval-visibly-p nil)
 (setq ess-local-process-name "R")
@@ -10,11 +11,6 @@
 (setq comint-scroll-to-bottom-on-input t)
 (setq comint-scroll-to-bottom-on-output t)
 (setq comint-move-point-for-output t)
-
-(add-hook 'ess-mode-hook (lambda ()
-                           (run-hooks 'prog-mode-hook)
-                           (define-key ess-mode-map (kbd "<C-M-return>")
-                             'ess-eval-region-or-line-and-step)))
 
 (require-package 'ess-R-data-view)
 (require 'ess-R-data-view)
@@ -26,5 +22,13 @@
 (require 'ess-smart-underscore)
 (require-package 'ess-view)
 (require 'ess-view)
+(setq ess-view--spreadsheet-program "/Applications/Numbers.app/Contents/MacOS/Numbers")
+
+(add-hook 'ess-mode-hook (lambda ()
+                           (run-hooks 'prog-mode-hook)
+                           (flycheck-mode -1)))
+(define-key ess-mode-map (kbd "<C-M-return>") 'ess-eval-region-or-line-and-step)
+(define-key inferior-ess-mode-map (kbd "C-c t") 'ess-R-object-popup)
+(define-key ess-mode-map (kbd "C-c t") 'ess-R-object-popup)
 
 (provide 'init-ess)

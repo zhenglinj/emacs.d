@@ -19,6 +19,7 @@
 (add-to-list 'zeal-at-point-mode-alist '(emacs-lisp-mode . "Emacs_lisp"))
 (add-to-list 'zeal-at-point-mode-alist '(csharp-mode . ".net framework"))
 (add-to-list 'zeal-at-point-mode-alist '(ess-mode . "r"))
+(add-to-list 'zeal-at-point-mode-alist '(inferior-ess-mode . "r"))
 
 (global-set-key (kbd "C-c D") 'zeal-at-point)
 

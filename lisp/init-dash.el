@@ -23,6 +23,7 @@
 (add-to-list 'dash-at-point-mode-alist '(emacs-lisp-mode . "Emacs_lisp"))
 (add-to-list 'dash-at-point-mode-alist '(csharp-mode . ".net framework"))
 (add-to-list 'dash-at-point-mode-alist '(ess-mode . "r"))
+(add-to-list 'dash-at-point-mode-alist '(inferior-ess-mode . "r"))
 
 (when (package-installed-p 'dash-at-point)
   (global-set-key (kbd "C-c D") 'dash-at-point))
