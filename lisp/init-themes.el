@@ -3,6 +3,7 @@
 
 (require-package 'monokai-theme)
 (require-package 'dracula-theme)
+(require-package 'spacemacs-theme)
 
 (require-package 'color-theme-sanityinc-solarized)
 (require-package 'color-theme-sanityinc-tomorrow)

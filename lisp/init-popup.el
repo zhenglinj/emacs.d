@@ -2,14 +2,14 @@
 (require 'popup)
 
 (require-package 'popwin)
+(require 'popwin)
+(popwin-mode 1)
+
 (require-package 'pos-tip)
 (if (not (or (eq system-type 'ms-dos)
              (eq system-type 'windows-nt)
              (eq system-type 'cygwin)))
-    (progn
-      (require 'popwin)
-      (require 'pos-tip)
-      (popwin-mode 1))
+    (require 'pos-tip)
   )
 
 (provide 'init-popup)
