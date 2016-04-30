@@ -53,7 +53,7 @@
 (require-package 'scratch)
 (require-package 'mwe-log-commands)
 
-(require 'init-popup)
+;; (require 'init-popup)
 (require 'init-sdcv)
 (require 'init-move-window-buffer)
 ;; require init-yasnippet before init-auto-complete
@@ -80,7 +80,7 @@
 (require 'init-recentf)
 (require 'init-ido)
 (require 'init-hippie-expand)
-(require 'init-company)
+;; (require 'init-company)
 (require 'init-auto-complete)
 (require 'init-windows)
 (if (not (boundp 'light-weight-emacs))
@@ -111,7 +111,8 @@
 (require 'init-css)
 (require 'init-haml)
 (require 'init-python-mode)
-(require 'init-haskell)
+(unless (version<= emacs-version "24.3")
+  (require 'init-haskell))
 (require 'init-elm)
 (require 'init-ruby-mode)
 (require 'init-rails)

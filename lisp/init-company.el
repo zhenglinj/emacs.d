@@ -1,41 +1,50 @@
-(require-package 'company)
-(require 'company)
+;; WAITING: haskell-mode sets tags-table-list globally, breaks tags-completion-at-point-function
+;; TODO Default sort order should place [a-z] before punctuation
 
-;; (add-hook 'after-init-hook 'global-company-mode)
+(setq tab-always-indent 'complete)  ;; use 't when company is disabled
+(add-to-list 'completion-styles 'initials t)
+;; Stop completion-at-point from popping up completion buffers so eagerly
+(setq completion-cycle-threshold 5)
 
-(define-key company-mode-map [(control tab)] 'company-complete)
-(define-key company-active-map (kbd "\C-n") 'company-select-next)
-(define-key company-active-map (kbd "\C-p") 'company-select-previous)
-(setq company-require-match nil)
 
-(if (fboundp 'evil-declare-change-repeat)
-    (mapc #'evil-declare-change-repeat
-          '(company-complete-common
-            company-select-next
-            company-select-previous
-            company-complete-selection
-            )))
+(when (maybe-require-package 'company)
+  (add-hook 'after-init-hook 'global-company-mode)
+  (after-load 'company
+    (diminish 'company-mode "CMP")
+    (define-key company-mode-map (kbd "M-/") 'company-complete)
+    (define-key company-active-map (kbd "M-n") 'company-select-next)
+    (define-key company-active-map (kbd "M-p") 'company-select-previous)
+    (setq-default company-backends '((company-capf company-dabbrev-code) company-dabbrev)))
+  (when (maybe-require-package 'company-quickhelp)
+    (after-load 'company-quickhelp
+      (define-key company-quickhelp-mode-map (kbd "M-h") nil))
+    (add-hook 'after-init-hook 'company-quickhelp-mode))
 
-(eval-after-load 'company
-  '(progn
-     (add-to-list 'company-backends 'company-cmake)
-     ;; I donot like the downcase code in company-dabbrev
-     (setq company-backends (delete 'company-dabbrev company-backends))
-     (setq company-begin-commands '(self-insert-command))
-     (setq company-idle-delay 0.2)
-     ))
+  (defun sanityinc/local-push-company-backend (backend)
+    "Add BACKEND to a buffer-local version of `company-backends'."
+    (set (make-local-variable 'company-backends)
+         (append (list backend) company-backends))))
 
-;; (require 'color)
-;; (add-hook 'after-init-hook
-;;           '(lambda ()
-;;              (let ((bg (face-attribute 'default :background)))
-;;                (custom-set-faces
-;;                 `(company-tooltip ((t (:background ,(color-lighten-name bg 20)))))
-;;                 `(company-tooltip-selection ((t (:background ,(color-lighten-name bg 10)))))
-;;                 `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 40)))))
-;;                 `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 30)))))
-;;                 ;; `(company-tooltip-selection ((t (:inherit font-lock-function-name-face :background ,(color-lighten-name bg 5)))))
-;;                 `(company-tooltip-common ((t (:inherit font-lock-constant-face))))
-;;                 ))))
+
+;; Suspend page-break-lines-mode while company menu is active
+;; (see https://github.com/company-mode/company-mode/issues/416)
+(after-load 'company
+  (after-load 'page-break-lines-mode
+    (defvar sanityinc/page-break-lines-on-p nil)
+    (make-variable-buffer-local 'sanityinc/page-break-lines-on-p)
+
+    (defun sanityinc/page-break-lines-disable (&rest ignore)
+      (when (setq sanityinc/page-break-lines-on-p (bound-and-true-p page-break-lines-mode))
+        (page-break-lines-mode -1)))
+
+    (defun sanityinc/page-break-lines-maybe-reenable (&rest ignore)
+      (when sanityinc/page-break-lines-on-p
+        (page-break-lines-mode 1)))
+
+    (add-hook 'company-completion-started-hook 'sanityinc/page-break-lines-disable)
+    (add-hook 'company-completion-finished-hook 'sanityinc/page-break-lines-maybe-reenable)
+    (add-hook 'company-completion-cancelled-hook 'sanityinc/page-break-lines-maybe-reenable)))
+
+
 
 (provide 'init-company)
