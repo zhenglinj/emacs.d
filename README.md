@@ -79,9 +79,10 @@ config adds improved defaults and extended support for the following:
 * Common Lisp (with Slime)
 
 In particular, there's a nice config for *autocompletion* with
-`company`, and `flycheck` is used to immediately highlight syntax
-errors in Ruby, HAML, Python, Javascript, PHP and a number of other
-languages.
+[company](https://company-mode.github.io/), and
+[flycheck](http://www.flycheck.org) is used to immediately highlight
+syntax errors in Ruby, Python, Javascript, Haskell and a number of
+other languages.
 
 ## Supported Emacs versions
 
@@ -133,6 +134,11 @@ Update the config with `git pull`. You'll probably also want/need to update
 the third-party packages regularly too:
 
 <kbd>M-x package-list-packages</kbd>, then <kbd>U</kbd> followed by <kbd>x</kbd>.
+
+You should usually restart Emacs after pulling changes or updating
+packages so that they can take effect. Emacs should usually restore
+your working buffers when you restart due to this configuration's use
+of the `desktop` and `session` packages.
 
 ## Adding your own customization
 
