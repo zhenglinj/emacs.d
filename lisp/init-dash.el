@@ -15,13 +15,13 @@
     (require-package 'dash-at-point)))
 
 (add-to-list 'dash-at-point-mode-alist '(c-mode . "c"))
-(add-to-list 'dash-at-point-mode-alist '(c++-mode . "c++"))
+(add-to-list 'dash-at-point-mode-alist '(c++-mode . "cpp"))
 (add-to-list 'dash-at-point-mode-alist '(go-mode . "go"))
 (add-to-list 'dash-at-point-mode-alist '(perl-mode . "perl"))
-(add-to-list 'dash-at-point-mode-alist '(python-mode . "python 3"))
+(add-to-list 'dash-at-point-mode-alist '(python-mode . "python"))
 (add-to-list 'dash-at-point-mode-alist '(cmake-mode . "cmake"))
 (add-to-list 'dash-at-point-mode-alist '(emacs-lisp-mode . "Emacs_lisp"))
-(add-to-list 'dash-at-point-mode-alist '(csharp-mode . ".net framework"))
+(add-to-list 'dash-at-point-mode-alist '(csharp-mode . "net"))
 (add-to-list 'dash-at-point-mode-alist '(ess-mode . "r"))
 (add-to-list 'dash-at-point-mode-alist '(inferior-ess-mode . "r"))
 
