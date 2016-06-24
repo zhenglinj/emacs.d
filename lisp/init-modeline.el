@@ -32,6 +32,16 @@
   (powerline-raw which-func-format)
   :when (and active (bound-and-true-p which-func-mode)))
 
+(defun z/truncate-buffer-name (buf-name)
+  (let ((len (length buf-name)))
+    (cond ((> len 20)
+           (concat (substring buf-name 0 10)
+                   "..."
+                   (substring buf-name (- len 7) len)))
+          (t buf-name))))
+
+(advice-add 'powerline-buffer-id :filter-return 'z/truncate-buffer-name)
+
 (defun z/spaceline-spacemacs-theme (&rest additional-segments)
   "Install the modeline used by Spacemacs.
 ADDITIONAL-SEGMENTS are inserted on the right, between `global' and
