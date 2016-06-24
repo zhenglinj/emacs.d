@@ -1,13 +1,18 @@
-(require-package 'projectile)
-(require 'projectile)
-(delight '((projectile-mode nil "projectile")))
+(when (maybe-require-package 'projectile)
+  (add-hook 'after-init-hook 'projectile-global-mode)
 
-(projectile-global-mode)
-(setq projectile-completion-system 'default)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map [?\s-d] 'projectile-find-dir)
-(define-key projectile-mode-map [?\s-p] 'projectile-switch-project)
-(define-key projectile-mode-map [?\s-f] 'projectile-find-file)
-(define-key projectile-mode-map [?\s-g] 'projectile-grep)
+  ;; The following code means you get a menu if you hit "C-c p" and wait
+  (after-load 'guide-key
+    (add-to-list 'guide-key/guide-key-sequence "C-c p"))
+
+  ;; Shorter modeline
+  (after-load 'projectile
+    (setq-default
+     projectile-mode-line
+     '(:eval
+       (if (file-remote-p default-directory)
+           " Pr"
+         (format " Pr[%s]" (projectile-project-name)))))))
+
 
 (provide 'init-projectile)
