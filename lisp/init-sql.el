@@ -33,7 +33,7 @@
 (defun sanityinc/font-lock-everything-in-sql-interactive-mode ()
   (unless (eq 'oracle sql-product)
     (sql-product-font-lock nil nil)))
-(add-hook 'sql-interactive-mode-hook 'sanityinc/font-lock-everything-in-sql-interactive-mode)
+;; (add-hook 'sql-interactive-mode-hook 'sanityinc/font-lock-everything-in-sql-interactive-mode)
 
 
 (after-load 'page-break-lines
