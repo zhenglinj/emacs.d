@@ -98,6 +98,7 @@
 (require 'init-github)
 
 (require 'init-compile)
+(require 'init-realgud)
 (require 'init-crontab)
 (require 'init-textile)
 (require 'init-markdown)
