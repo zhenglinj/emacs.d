@@ -113,6 +113,9 @@
       (remove-hook 'pre-command-hook #'hl-sexp-unhighlight))))
 
 
+(require-package 'immortal-scratch)
+(add-hook 'after-init-hook 'immortal-scratch-mode)
+
 
 ;;; Support byte-compilation in a sub-process, as
 ;;; required by highlight-cl
@@ -259,6 +262,10 @@
 
 (when (maybe-require-package 'rainbow-mode)
   (add-hook 'sanityinc/theme-mode-hook 'rainbow-mode))
+
+(when (maybe-require-package 'aggressive-indent)
+  ;; Can be prohibitively slow with very long forms
+  (add-to-list 'sanityinc/theme-mode-hook (lambda () (aggressive-indent-mode -1)) t))
 
 
 
