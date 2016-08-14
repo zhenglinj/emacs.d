@@ -46,5 +46,7 @@ indentation rules."
           end (point-max)))
   (shell-command-on-region beg end "tidy -xml -q -i" (current-buffer) t "*tidy-errors*" t))
 
+(require-package 'auto-complete-nxml)
+(require 'auto-complete-nxml)
 
 (provide 'init-nxml)
