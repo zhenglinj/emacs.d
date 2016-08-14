@@ -1,6 +1,7 @@
 (require-package 'omnisharp)
 (require 'omnisharp)
 
+;; (setq omnisharp-server-executable-path "~/.emacs.d/site-lisp/ycmd/third_party/OmniSharpServer/OmniSharp/bin/Release/OmniSharp.exe")
 (setq omnisharp-debug t)
 (setq omnisharp-auto-complete-want-documentation t)
 (setq omnisharp-company-sort-results t)
