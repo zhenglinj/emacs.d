@@ -15,6 +15,15 @@
 (custom-set-variables
  '(powerline-default-separator nil))
 
+;; Shorten minor-mode-alist in the modeline
+(delight '((eldoc-mode nil "eldoc")
+           (global-whitespace-newline-mode nil "whitespace")
+           (global-whitespace-mode nil "whitespace")
+           (whitespace-newline-mode nil "whitespace")
+           (whitespace-mode nil "whitespace")
+           (abbrev-mode nil "abbrev")
+           ))
+
 ;; (add-hook 'after-init-hook
 ;;           (lambda ()
 ;;             (powerline-default-theme)))
