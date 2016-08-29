@@ -14,24 +14,25 @@
 
 ;; Elpy, the Emacs Lisp Python Environment
 ;; https://github.com/jorgenschaefer/elpy
-;; (when (require 'elpy nil t)
-;;   ;; disable flymake, company, eldoc modules
-;;   (setq elpy-modules '(elpy-module-sane-defaults
-;;                        ;; elpy-module-company
-;;                        ;; elpy-module-eldoc
-;;                        ;; elpy-module-flymake
-;;                        elpy-module-highlight-indentation
-;;                        elpy-module-pyvenv
-;;                        elpy-module-yasnippet))
-;;   (elpy-enable)
-;;   ;; (setq elpy-rpc-backend "jedi")
-;;   )
+(require-package 'elpy)
+(when (require 'elpy nil t)
+  ;; disable flymake, company, eldoc modules
+  (setq elpy-modules '(elpy-module-sane-defaults
+                       ;; elpy-module-company
+                       elpy-module-eldoc
+                       ;; elpy-module-flymake
+                       elpy-module-highlight-indentation
+                       elpy-module-pyvenv
+                       elpy-module-yasnippet))
+  (elpy-enable)
+  ;; (setq elpy-rpc-backend "jedi")
+  )
 
 
-(require-package 'python-environment)
+;; (require-package 'python-environment)
 
-(require-package 'highlight-indentation)
-(add-hook 'python-mode-hook 'highlight-indentation-mode)
+;; (require-package 'highlight-indentation)
+;; (add-hook 'python-mode-hook 'highlight-indentation-mode)
 
 ;; jedi (Jedi.el is a Python auto-completion package for Emacs.)
 ;; http://tkf.github.io/emacs-jedi/latest/#configuration
@@ -41,8 +42,8 @@
 (setq jedi:use-shortcuts t)
 (setq jedi:tooltip-method nil)
 (add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:key-goto-definition [f12])
-(setq jedi:key-goto-definition-pop-marker [S-f12])
+;; (setq jedi:key-goto-definition [f12])
+;; (setq jedi:key-goto-definition-pop-marker [S-f12])
 (add-hook 'python-mode-hook
           '(lambda ()
              (local-set-key (kbd "ESC <f12>") 'jedi:goto-definition-pop-marker)))
@@ -53,5 +54,17 @@
 ;; live-py-plugin
 (require-package 'live-py-mode)
 (require 'live-py-mode)
+
+
+;; Emacs IPython Notebook
+(require-package 'ein)
+(require 'ein)
+
+(setq ein:use-auto-complete t)
+;; Or, to enable "superpack" (a little bit hacky improvements):
+;; (setq ein:use-auto-complete-superpack t)
+
+(require-package 'ob-ipython)
+(require 'ob-ipython)
 
 (provide 'init-python-mode)
