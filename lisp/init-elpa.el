@@ -13,6 +13,7 @@
 
 
 ;;; Standard package repositories
+(setq package-archives '())             ; Since elpa.gnu.org is unreachable sometimes
 
 (when (< emacs-major-version 24)
   ;; Mainly for ruby-mode
