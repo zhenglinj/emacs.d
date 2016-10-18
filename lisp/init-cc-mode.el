@@ -122,50 +122,50 @@
 ;; (require 'gdb-ui nil 'noerror)
 (require 'gdb-mi nil 'noerror)
 
-(defadvice gdb-setup-windows (after my-setup-gdb-windows activate)
-  "my gdb ui,fix sizes of every buffer"
-  (gdb-get-buffer-create 'gdb-locals-buffer)
-  (gdb-get-buffer-create 'gdb-stack-buffer)
-  (gdb-get-buffer-create 'gdb-breakpoints-buffer)
-  (set-window-dedicated-p (selected-window) nil)
-  (switch-to-buffer gud-comint-buffer)
-  (delete-other-windows)
-  (setq z/gud-gdb-buffer-width (/ (* (window-width) 3) 4)) ;for input/output buffer and locals buffer of gud mode
-  (let ((win0 (selected-window))
-        (win1 (split-window nil (/ (* (window-height) 8) 10)))
-        (win2 (split-window nil (/ (* (window-height) 4) 8)))
-        (win3 (split-window nil z/gud-gdb-buffer-width 'right)) ;input/output
-        )
-    (gdb-set-window-buffer (gdb-get-buffer-create 'gdb-inferior-io) nil win3)
-    (select-window win2)
-    (set-window-buffer
-     win2
-     (if gud-last-last-frame
-         (gud-find-file (car gud-last-last-frame))
-       (if gdb-main-file
-           (gud-find-file gdb-main-file)
-         ;; Put buffer list in window if we
-         ;; can't find a source file.
-         (list-buffers-noselect))))
-    (setq gdb-source-window (selected-window))
-    ;; (let ((win4 (split-window nil z/gud-gdb-buffer-width 'right))) ;locals
-    ;;   (gdb-set-window-buffer (gdb-locals-buffer-name) nil win4))
-    (select-window win1)
-    (gdb-set-window-buffer (gdb-stack-buffer-name))
-    (let ((win5 (split-window-right)))
-      (gdb-set-window-buffer (if gdb-show-threads-by-default
-                                 (gdb-threads-buffer-name)
-                               (gdb-breakpoints-buffer-name))
-                             nil win5))
-    (select-window win0))
+;; (defadvice gdb-setup-windows (after my-setup-gdb-windows activate)
+;;   "my gdb ui,fix sizes of every buffer"
+;;   (gdb-get-buffer-create 'gdb-locals-buffer)
+;;   (gdb-get-buffer-create 'gdb-stack-buffer)
+;;   (gdb-get-buffer-create 'gdb-breakpoints-buffer)
+;;   (set-window-dedicated-p (selected-window) nil)
+;;   (switch-to-buffer gud-comint-buffer)
+;;   (delete-other-windows)
+;;   (setq z/gud-gdb-buffer-width (/ (* (window-width) 2) 4)) ;for input/output buffer and locals buffer of gud mode
+;;   (let ((win0 (selected-window))
+;;         (win1 (split-window nil (/ (* (window-height) 8) 10)))
+;;         (win2 (split-window nil (/ (* (window-height) 4) 8)))
+;;         (win3 (split-window nil z/gud-gdb-buffer-width 'right)) ;input/output
+;;         )
+;;     (gdb-set-window-buffer (gdb-get-buffer-create 'gdb-inferior-io) nil win3)
+;;     (select-window win2)
+;;     (set-window-buffer
+;;      win2
+;;      (if gud-last-last-frame
+;;          (gud-find-file (car gud-last-last-frame))
+;;        (if gdb-main-file
+;;            (gud-find-file gdb-main-file)
+;;          ;; Put buffer list in window if we
+;;          ;; can't find a source file.
+;;          (list-buffers-noselect))))
+;;     (setq gdb-source-window (selected-window))
+;;     ;; (let ((win4 (split-window nil z/gud-gdb-buffer-width 'right))) ;locals
+;;     ;;   (gdb-set-window-buffer (gdb-locals-buffer-name) nil win4))
+;;     (select-window win1)
+;;     (gdb-set-window-buffer (gdb-stack-buffer-name))
+;;     (let ((win5 (split-window-right)))
+;;       (gdb-set-window-buffer (if gdb-show-threads-by-default
+;;                                  (gdb-threads-buffer-name)
+;;                                (gdb-breakpoints-buffer-name))
+;;                              nil win5))
+;;     (select-window win0))
 
-  (with-current-buffer (gdb-breakpoints-buffer-name)
-    (toggle-truncate-lines 1))
-  (with-current-buffer (gdb-threads-buffer-name)
-    (toggle-truncate-lines 1))
-  (with-current-buffer (gdb-locals-buffer-name)
-    (toggle-truncate-lines 1))
-  )
+;;   (with-current-buffer (gdb-breakpoints-buffer-name)
+;;     (toggle-truncate-lines 1))
+;;   (with-current-buffer (gdb-threads-buffer-name)
+;;     (toggle-truncate-lines 1))
+;;   (with-current-buffer (gdb-locals-buffer-name)
+;;     (toggle-truncate-lines 1))
+;;   )
 
 (defun gud-break-or-remove (&optional force-remove)
   "Set/clear breakpoin."
