@@ -24,4 +24,7 @@
 ;; @see http://stackoverflow.com/questions/7619640/emacs-latex-yasnippet-why-are-newlines-inserted-after-a-snippet
 (setq-default mode-require-final-newline nil)
 
+;; @see http://emacs.stackexchange.com/questions/24470/warning-yasnippet-modified-buffer-in-a-backquote-expression
+;; (add-to-list 'warning-suppress-types '(yasnippet backquote-change))
+
 (provide 'init-yasnippet)
