@@ -63,6 +63,7 @@
 (require 'init-bm)
 (require 'init-speedbar)
 (require 'init-geeknote)
+(require 'init-proxies)
 
 (require 'init-frame-hooks)
 (require 'init-xterm)
@@ -126,6 +127,7 @@
 (require 'init-go-mode)
 (require 'init-csharp-mode)
 (require 'init-ess)
+(require 'init-misc-modes)
 
 (require 'init-paredit)
 (require 'init-lisp)
