@@ -5,14 +5,18 @@
 
 (require-package 'pip-requirements)
 
-(when (maybe-require-package 'anaconda-mode)
-  (after-load 'python
-    (add-hook 'python-mode-hook 'anaconda-mode)
-    (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
-  (when (maybe-require-package 'company-anaconda)
-    (after-load 'company
-      (add-hook 'python-mode-hook
-                (lambda () (sanityinc/local-push-company-backend 'company-anaconda))))))
+;; (when (maybe-require-package 'anaconda-mode)
+;;   (after-load 'python
+;;     (add-hook 'python-mode-hook 'anaconda-mode)
+;;     (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+;;   ;; (when (maybe-require-package 'company-anaconda)
+;;   ;;   (After-load 'company
+;;   ;;     (add-hook 'python-mode-hook
+;;   ;;               (lambda () (sanityinc/local-push-company-backend 'company-anaconda)))))
+;;
+;;   ;; (when (maybe-require-package 'ac-anaconda)
+;;   ;;   (add-hook 'python-mode-hook 'ac-anaconda-setup))
+;;   )
 
 
 (autoload 'doctest-mode "doctest-mode" "Python doctest editing mode." t)
@@ -47,7 +51,7 @@
 ;; http://tkf.github.io/emacs-jedi/latest/#configuration
 ;; (require-package 'jedi)                 ; use site-list/emacs-jedi
 (autoload 'jedi:setup "jedi" nil t)
-(setq jedi:setup-keys t)
+;; (setq jedi:setup-keys t)
 (setq jedi:use-shortcuts t)
 (setq jedi:tooltip-method nil)
 (add-hook 'python-mode-hook 'jedi:setup)
