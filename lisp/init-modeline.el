@@ -19,15 +19,6 @@
 (custom-set-variables
  '(powerline-default-separator nil))
 
-;; Shorten minor-mode-alist in the modeline
-(delight '((eldoc-mode nil "eldoc")
-           (global-whitespace-newline-mode nil "whitespace")
-           (global-whitespace-mode nil "whitespace")
-           (whitespace-newline-mode nil "whitespace")
-           (whitespace-mode nil "whitespace")
-           (abbrev-mode nil "abbrev")
-           ))
-
 ;; (add-hook 'after-init-hook
 ;;           (lambda ()
 ;;             (powerline-default-theme)))
@@ -55,48 +46,9 @@
 
 (advice-add 'powerline-buffer-id :filter-return 'z/truncate-buffer-name)
 
-(defun z/spaceline-spacemacs-theme (&rest additional-segments)
-  "Install the modeline used by Spacemacs.
-ADDITIONAL-SEGMENTS are inserted on the right, between `global' and
-`buffer-position'."
-  (spaceline-install
-
-   '(((workspace-number window-number)
-      :fallback evil-state
-      :separator "|"
-      :face highlight-face)
-     (anzu
-      auto-compile
-      z/buffer-mule-info buffer-modified buffer-id z/which-function remote-host)
-     major-mode
-     (((flycheck-error flycheck-warning flycheck-info)
-       :when active)
-      (version-control :when active))
-     (((minor-modes :separator " ")
-       process)
-      :when active)
-     (erc-track :when active)
-     (org-pomodoro :when active)
-     (org-clock :when active)
-     nyan-cat)
-
-   `((battery :when active)
-     selection-info
-     ((
-       ;; buffer-encoding-abbrev
-       point-position
-       line-column
-       buffer-size)
-      :separator " | ")
-     (global :when active)
-     ,@additional-segments
-     buffer-position
-     hud)))
-
 (add-hook 'after-init-hook
           (lambda ()
-            ;; (spaceline-spacemacs-theme)
-            (z/spaceline-spacemacs-theme)
+            (spaceline-spacemacs-theme)
             ))
 
 (provide 'init-modeline)
