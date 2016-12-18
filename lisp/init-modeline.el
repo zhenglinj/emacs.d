@@ -4,6 +4,10 @@
            (global-whitespace-mode nil "whitespace")
            (whitespace-newline-mode nil "whitespace")
            (whitespace-mode nil "whitespace")
+           (global-whitespace-cleanup-mode nil "whitespace-cleanup-mode")
+           (whitespace-cleanup-mode nil "whitespace-cleanup-mode")
+           (global-auto-revert-mode nil "autorevert")
+           (auto-revert-mode nil "autorevert")
            (abbrev-mode nil "abbrev")
            ))
 
@@ -43,7 +47,7 @@
 
 (defun z/truncate-buffer-name (buf-name)
   (let ((len (length buf-name)))
-    (cond ((> len 20)
+    (cond ((> len 30)
            (concat (substring buf-name 0 10)
                    "..."
                    (substring buf-name (- len 7) len)))
