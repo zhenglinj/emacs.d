@@ -80,8 +80,8 @@
 
 
 
-(when (fboundp 'global-prettify-symbols-mode)
-  (global-prettify-symbols-mode))
+;; (when (fboundp 'global-prettify-symbols-mode)
+;;   (global-prettify-symbols-mode))
 
 
 (require-package 'undo-tree)

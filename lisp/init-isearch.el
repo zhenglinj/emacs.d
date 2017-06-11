@@ -3,6 +3,7 @@
   (global-anzu-mode t)
   (diminish 'anzu-mode)
   (setq anzu-mode-lighter "")
+  (setq anzu-cons-mode-line-p nil)
   (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
   (global-set-key [remap query-replace] 'anzu-query-replace))
 
