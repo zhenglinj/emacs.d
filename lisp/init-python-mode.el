@@ -1,3 +1,8 @@
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil)
+            (setq python-indent 4)))
+
 (setq auto-mode-alist
       (append '(("SConstruct\\'" . python-mode)
                 ("SConscript\\'" . python-mode))
