@@ -26,6 +26,11 @@
 (after-load 'magit
   (fullframe magit-status magit-mode-quit-window))
 
+;; diff-hl + Magit == 'max-lisp-eval-depth' 'lisp nesting exceeds max-lisp-eval-depth [Mac OS X]
+;; https://github.com/dgutov/diff-hl/issues/65
+(when *is-a-mac*
+  (magit-auto-revert-mode -1))
+
 ;; (when (maybe-require-package 'git-commit)
 ;;   (add-hook 'git-commit-mode-hook 'goto-address-mode))
 
